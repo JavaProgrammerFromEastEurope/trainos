@@ -20,7 +20,8 @@ def main():
     kernel.modules.register(
         DroneModule(
             kernel.event_bus,
-            kernel.telemetry
+            kernel.telemetry,
+            kernel.state,
         )
     )
 
