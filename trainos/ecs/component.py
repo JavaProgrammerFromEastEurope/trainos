@@ -19,7 +19,6 @@ class VelocityComponent:
 class BatteryComponent:
 
     level: float = 100.0
-
     consumption_rate: float = 0.5
 
 
@@ -33,3 +32,12 @@ class DroneComponent:
 class StatusComponent:
 
     active: bool = True
+
+
+@dataclass(slots=True)
+class SpatialComponent:
+
+    wagon_id: str
+    sector_id: str
+    cell_x: int		= 0
+    cell_y: int 	= 0
