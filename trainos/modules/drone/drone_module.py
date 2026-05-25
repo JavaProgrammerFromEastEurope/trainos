@@ -1,6 +1,7 @@
 from trainos.core.module import BaseModule
 from trainos.ecs.world import ECSWorld
 from trainos.ecs.component import (
+    NavigationComponent,
     PositionComponent,
     SpatialComponent,
     VelocityComponent,
@@ -24,6 +25,7 @@ class DroneModule(BaseModule):
         self.world.entities.add_component(entity, PositionComponent(x=0, y=0))
         self.world.entities.add_component(entity, VelocityComponent(dx=1, dy=0))
         self.world.entities.add_component(entity, StatusComponent(active=True))
+        self.world.entities.add_component(entity, NavigationComponent(target_x=10,target_y=10))
         self.world.entities.add_component(
             entity,
             SpatialComponent(

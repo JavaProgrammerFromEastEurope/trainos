@@ -27,8 +27,6 @@ def main():
 					)
     )
 
-
-
     kernel.modules.register(
         DroneModule(
             kernel.event_bus,
