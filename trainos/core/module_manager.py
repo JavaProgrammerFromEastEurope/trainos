@@ -10,16 +10,13 @@ class ModuleManager:
         self.modules[module.name] = module
 
     def start_all(self):
-
         for module in self.modules.values():
             module.start()
 
-    def update_all(self):
-
+    def update_all(self, current_tick):
         for module in self.modules.values():
-            module.update()
+            module.update(current_tick)
 
     def shutdown_all(self):
-
         for module in self.modules.values():
             module.shutdown()

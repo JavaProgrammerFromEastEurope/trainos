@@ -8,27 +8,19 @@ from trainos.core.state import SystemState
 class BaseModule(ABC):
 
     def __init__(
-        self,
-        name: str,
-        event_bus: EventBus,
-        telemetry: Telemetry,
-        state: SystemState
+        self, name: str, event_bus: EventBus, telemetry: Telemetry, state: SystemState
     ):
-
-        self.name = name
-
-        self.event_bus = event_bus
-
-        self.telemetry = telemetry
-
-        self.state = state
+        self.name 			= name
+        self.event_bus 	= event_bus
+        self.telemetry 	= telemetry
+        self.state 			= state
 
     @abstractmethod
     def start(self):
         pass
 
     @abstractmethod
-    def update(self):
+    def update(self, current_tick):
         pass
 
     @abstractmethod

@@ -24,8 +24,8 @@ class DroneModule(BaseModule):
         self.world.entities.add_component(entity, VelocityComponent(dx = 1, dy = 0))
         self.world.entities.add_component(entity, StatusComponent(active = True))
 
-    def update(self):
-        self.world.update(self.telemetry)
+    def update(self, current_tick):
+        self.world.update(current_tick, self.telemetry)
 
     def shutdown(self):
         self.telemetry.log("Drone module shutdown")

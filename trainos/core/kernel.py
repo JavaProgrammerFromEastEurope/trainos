@@ -4,7 +4,7 @@ from trainos.core.module_manager import ModuleManager
 from trainos.core.state import SystemState
 from trainos.core.telemetry import Telemetry
 from trainos.core.persistence import PersistenceManager
-
+from trainos.simulation.simulation_clock import SimulationClock
 from trainos.simulation.tick import TickLoop
 
 
@@ -13,6 +13,8 @@ class Kernel:
     def __init__(self):
 
         self.config = ConfigLoader()
+
+        self.clock = SimulationClock(tick_rate=60)
 
         self.persistence = PersistenceManager()
 
@@ -40,9 +42,11 @@ class Kernel:
 
     def update(self):
 
-        self.modules.update_all()
+        self.clock.step()
 
-        self.persistence.save_world(self.state.export())
+        current_tick = self.clock.current_tick()
+
+        self.modules.update_all(current_tick)
 
     def shutdown(self):
 

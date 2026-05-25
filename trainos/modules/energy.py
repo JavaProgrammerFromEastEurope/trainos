@@ -20,25 +20,18 @@ class EnergyModule(BaseModule):
 
         self.telemetry.log("Energy module started")
 
-    def update(self):
+    def update(self, current_tick):
 
         self.energy -= self.consumption
 
-        self.state.set("energy.level", self.energy)
-
         self.telemetry.metric("energy.level", self.energy)
 
-        self.telemetry.log(f"Energy={self.energy}")
-
-        # STATE UPDATE
-        self.telemetry.log("Updating system state")
+        self.state.set("energy.level", self.energy)
 
         if self.energy < self.critical_threshold:
-
             self.event_bus.publish(
                 Event(type="LOW_ENERGY", payload={"energy": self.energy})
             )
 
     def shutdown(self):
-
         self.telemetry.log("Energy module shutdown")
