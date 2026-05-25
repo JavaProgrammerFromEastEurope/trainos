@@ -10,10 +10,11 @@ def main():
 
     kernel.modules.register(
         EnergyModule(
-            kernel.event_bus,
-            kernel.telemetry,
-            kernel.config
-        )
+						kernel.event_bus,
+						kernel.telemetry,
+						kernel.state,
+						kernel.config
+				)
     )
 
     kernel.modules.register(

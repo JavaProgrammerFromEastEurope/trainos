@@ -5,3 +5,7 @@ simulation:
 
 telemetry:
   enabled: true
+
+world:
+  width: 100
+  height: 100

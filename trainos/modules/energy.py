@@ -1,11 +1,12 @@
+from trainos.core import state
 from trainos.core.module import BaseModule
 from trainos.core.events import Event
 
 
 class EnergyModule(BaseModule):
 
-    def __init__(self, event_bus, telemetry, config):
-        super().__init__("energy", event_bus, telemetry)
+    def __init__(self, event_bus, telemetry, state, config):
+        super().__init__("energy", event_bus, telemetry, state)
 
         self.config = config.load("energy.yaml")
 
@@ -22,6 +23,8 @@ class EnergyModule(BaseModule):
     def update(self):
 
         self.energy -= self.consumption
+
+        self.state.set("energy.level", self.energy)
 
         self.telemetry.metric("energy.level", self.energy)
 

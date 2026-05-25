@@ -1,5 +1,6 @@
 from trainos.core.module import BaseModule
 from trainos.core.events import Event
+from trainos.core import state
 
 from trainos.modules.drone.drone_entity import DroneEntity
 from trainos.modules.drone.drone_manager import DroneManager
@@ -10,7 +11,7 @@ class DroneModule(BaseModule):
 
     def __init__(self, event_bus, telemetry):
 
-        super().__init__("drone_module", event_bus, telemetry)
+        super().__init__("drone_module", event_bus, telemetry, state)
 
         self.manager = DroneManager()
 
