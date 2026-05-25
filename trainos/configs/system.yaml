@@ -1,0 +1,7 @@
+tick_rate: 1.0
+
+simulation:
+  enables: true
+
+telemetry:
+  enabled: true
