@@ -1,44 +1,28 @@
-from trainos.core.kernel import Kernel
-
-from trainos.modules.energy import EnergyModule
-from trainos.modules.drone.drone_module import DroneModule
-from trainos.world.wagon import Wagon
+from trainos.core.kernel 	import Kernel
+from trainos.world.wagon 	import Wagon
 from trainos.world.sector import Sector
 
 
-def main():
-
-    kernel = Kernel()
-
+def build_world(kernel):
     wagon = Wagon(wagon_id="wagon_001")
-    reactor_sector = Sector(
-      sector_id="reactor", width=10, height=10)
+    reactor_sector = Sector(sector_id="reactor", width=10, height=10)
     reactor_sector.generate()
 
+    # Vertical wall
     for y in range(10):
-      reactor_sector.set_wall(5, y)
+        reactor_sector.set_wall(5, y)
+    # Door opening
+    door_cell = reactor_sector.get_cell(5, 5)
 
+    if door_cell:
+        door_cell.walkable = True
     wagon.add_sector(reactor_sector)
     kernel.world.add_wagon(wagon)
 
-    kernel.modules.register(
-        EnergyModule(
-						kernel.event_bus,
-						kernel.telemetry,
-						kernel.state,
-						kernel.config
-					)
-    )
 
-    kernel.modules.register(
-        DroneModule(
-            kernel.event_bus,
-            kernel.telemetry,
-            kernel.state,
-            kernel.world
-        )
-    )
-
+def main():
+    kernel = Kernel()
+    build_world(kernel)
     kernel.boot()
 
 
