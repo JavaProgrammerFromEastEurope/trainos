@@ -12,9 +12,12 @@ def main():
 
     wagon = Wagon(wagon_id="wagon_001")
     reactor_sector = Sector(
-      sector_id="reactor",
-      width=10, height=10)
+      sector_id="reactor", width=10, height=10)
     reactor_sector.generate()
+
+    for y in range(10):
+      reactor_sector.set_wall(5, y)
+
     wagon.add_sector(reactor_sector)
     kernel.world.add_wagon(wagon)
 
@@ -32,6 +35,7 @@ def main():
             kernel.event_bus,
             kernel.telemetry,
             kernel.state,
+            kernel.world
         )
     )
 

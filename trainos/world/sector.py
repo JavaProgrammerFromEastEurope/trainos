@@ -11,7 +11,12 @@ class Sector:
     def generate(self):
         for x in range(self.width):
             for y in range(self.height):
-                self.cells[(x, y)] = WorldCell(x = x, y = y)
+                self.cells[(x, y)] = WorldCell(x=x, y=y)
 
     def get_cell(self, x, y):
         return self.cells.get((x, y))
+
+    def set_wall(self, x, y):
+        cell = self.get_cell(x, y)
+        if cell:
+            cell.walkable = False
