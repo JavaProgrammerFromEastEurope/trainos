@@ -44,3 +44,5 @@ class NavigationComponent:
     target_x: int = 0
     target_y: int = 0
     path: list = field(default_factory=list)
+    current_index: int = 0
+    dirty: bool = True

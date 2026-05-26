@@ -1,3 +1,4 @@
+from trainos.ecs.systems.local_avoidance_system import LocalAvoidanceSystem
 from trainos.ecs.systems.navigation_system import NavigationSystem
 from trainos.ecs.entity_manager 					import EntityManager
 from trainos.core.scheduler 							import Scheduler
@@ -22,6 +23,8 @@ class ECSWorld:
         self.scheduler.add_task(OccupancySystem(self.world),	tick_interval=1)
         # Navigation AI
         self.scheduler.add_task(NavigationSystem(self.world), tick_interval=10)
+        # Local Avoidance System
+        self.scheduler.add_task(LocalAvoidanceSystem(self.world),tick_interval=1)
         # Reservation cells
         self.scheduler.add_task(ReservationSystem(self.world), tick_interval=1)
         # Physical movement
