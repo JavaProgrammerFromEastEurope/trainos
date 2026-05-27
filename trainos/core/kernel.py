@@ -21,6 +21,7 @@ from trainos.ecs.component import (
 
 from trainos.ecs.systems.occupancy_system import OccupancySystem
 from trainos.ecs.systems.battery_system import BatterySystem
+from trainos.ecs.systems.energy_ai_system import EnergyAISystem
 from trainos.ecs.systems.charging_system import ChargingSystem
 from trainos.ecs.systems.task_system import TaskSystem
 from trainos.ecs.systems.navigation_system import NavigationSystem
@@ -53,6 +54,7 @@ class Kernel:
     def _register_systems(self):
         self.scheduler.add_task(OccupancySystem(self.world), tick_interval=1)
         self.scheduler.add_task(BatterySystem(), tick_interval=1)
+        self.scheduler.add_task(EnergyAISystem(), tick_interval=1)
         self.scheduler.add_task(ChargingSystem(), tick_interval=1)
         self.scheduler.add_task(TaskSystem(self.task_manager), tick_interval=1)
         self.scheduler.add_task(NavigationSystem(self.world), tick_interval=1)
@@ -69,6 +71,7 @@ class Kernel:
                 wagon_id="wagon_001", sector_id="reactor", cell_x=1, cell_y=1
             ),
         )
+
         self.entities.add_component(entity_id, VelocityComponent())
         self.entities.add_component(entity_id, NavigationComponent())
         self.entities.add_component(entity_id, StatusComponent(active=True))

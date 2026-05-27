@@ -1,10 +1,11 @@
 from trainos.ecs.component import (
-    BatteryComponent,
     TaskComponent,
     NavigationComponent,
     SpatialComponent,
     StatusComponent,
+    BatteryComponent,
 )
+
 from trainos.tasks.task_scorer import TaskScorer
 
 
@@ -15,14 +16,15 @@ class TaskSystem:
 
     def update(self, entity_manager, telemetry):
         task_components = entity_manager.get_components(TaskComponent)
-        navigations = entity_manager.get_components(NavigationComponent)
-        spatials = entity_manager.get_components(SpatialComponent)
-        statuses = entity_manager.get_components(StatusComponent)
-        batteries = entity_manager.get_components(BatteryComponent)
+        navigations 		= entity_manager.get_components(NavigationComponent)
+        spatials 				= entity_manager.get_components(SpatialComponent)
+        statuses 				= entity_manager.get_components(StatusComponent)
+        batteries 			= entity_manager.get_components(BatteryComponent)
         available_tasks = self.task_manager.get_available_tasks()
 
         for entity_id, task_component in task_components.items():
-            status = statuses.get(entity_id)
+
+            status 	= statuses.get(entity_id)
             navigation = navigations.get(entity_id)
             spatial = spatials.get(entity_id)
             battery = batteries.get(entity_id)
@@ -36,22 +38,30 @@ class TaskSystem:
             if not spatial:
                 continue
 
+            if not battery:
+                continue
+
             if not status.active:
                 continue
 
-            if not battery:
+            if battery.charging:
+                continue
+
+            if battery.seeking_charge:
                 continue
 
             if task_component.current_task_id is not None:
                 current_task = self.task_manager.tasks.get(
                     task_component.current_task_id
                 )
-
-                if (
-                    current_task
-                    and spatial.cell_x == current_task.target_x
+                if not current_task:
+                    task_component.current_task_id = None
+                    continue
+                reached_target = (
+                    spatial.cell_x == current_task.target_x
                     and spatial.cell_y == current_task.target_y
-                ):
+                )
+                if reached_target:
                     current_task.completed = True
                     telemetry.log(
                         f"Entity {entity_id} "
@@ -65,13 +75,6 @@ class TaskSystem:
 
             best_task = None
             best_score = -999999
-
-            if battery.charging:
-                continue
-
-            if battery.current_energy <= battery.critical_threshold:
-                continue
-
             for task in available_tasks:
                 score = TaskScorer.score_task(spatial, task)
                 telemetry.metric(
@@ -80,13 +83,10 @@ class TaskSystem:
                 if score > best_score:
                     best_score = score
                     best_task = task
-
             if not best_task:
                 continue
-
             selected_task = best_task
             available_tasks.remove(selected_task)
-
             self.task_manager.assign_task(selected_task.task_id, entity_id)
             task_component.current_task_id = selected_task.task_id
             navigation.target_x = selected_task.target_x

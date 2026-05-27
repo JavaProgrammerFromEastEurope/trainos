@@ -63,3 +63,13 @@ class ChargingStationComponent:
     station_id: str
     occupied: bool = False
     charging_entity: int | None = None
+
+@dataclass(slots=True)
+class BatteryComponent:
+    current_energy: float = 100.0
+    max_energy: float = 100.0
+    passive_drain: float = 0.02
+    movement_drain: float = 0.15
+    charging: bool = False
+    seeking_charge: bool = False
+    critical_threshold: float = 15.0
