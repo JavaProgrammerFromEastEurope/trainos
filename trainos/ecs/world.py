@@ -1,7 +1,7 @@
 from trainos.ecs.systems.local_avoidance_system import LocalAvoidanceSystem
 from trainos.ecs.systems.navigation_system import NavigationSystem
 from trainos.ecs.entity_manager 					import EntityManager
-from trainos.core.scheduler 							import Scheduler
+from trainos.ecs.scheduler 							import Scheduler
 from trainos.ecs.systems.movement_system 	import MovementSystem
 from trainos.ecs.systems.battery_system 	import BatterySystem
 from trainos.ecs.systems.occupancy_system import OccupancySystem
@@ -25,7 +25,7 @@ class ECSWorld:
         # Adding Task System
         self.scheduler.add_task(TaskSystem(self.task_manager),tick_interval=5)
         # Navigation AI
-        self.scheduler.add_task(NavigationSystem(self.world), tick_interval=10)
+        self.scheduler.add_task(NavigationSystem(self.world), tick_interval=1)
         # Local Avoidance System
         self.scheduler.add_task(LocalAvoidanceSystem(self.world),tick_interval=1)
         # Reservation cells
@@ -33,9 +33,9 @@ class ECSWorld:
         # Physical movement
         self.scheduler.add_task(MovementSystem(), tick_interval=1)
         # Spatial synchronization
-        self.scheduler.add_task(SpatialSystem(), tick_interval=10)
+        self.scheduler.add_task(SpatialSystem(), tick_interval=1)
         # Battery management
-        self.scheduler.add_task(BatterySystem(), tick_interval=60)
+        self.scheduler.add_task(BatterySystem(), tick_interval=1)
         # Debug telemetry
         self.scheduler.add_task(TelemetrySystem(), tick_interval=1)
 

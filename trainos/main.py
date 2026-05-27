@@ -17,6 +17,7 @@ def build_world(kernel):
 
     if door_cell:
         door_cell.walkable = True
+        door_cell.blocked = False
     wagon.add_sector(reactor_sector)
     kernel.world.add_wagon(wagon)
 
