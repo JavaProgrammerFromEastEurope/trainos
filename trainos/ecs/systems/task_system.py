@@ -4,6 +4,7 @@ from trainos.ecs.component import (
     SpatialComponent,
     StatusComponent,
 )
+from trainos.tasks.task_scorer import TaskScorer
 
 
 class TaskSystem:
@@ -13,15 +14,15 @@ class TaskSystem:
 
     def update(self, entity_manager, telemetry):
         task_components = entity_manager.get_components(TaskComponent)
-        navigations 		= entity_manager.get_components(NavigationComponent)
-        spatials 				= entity_manager.get_components(SpatialComponent)
-        statuses 				= entity_manager.get_components(StatusComponent)
+        navigations = entity_manager.get_components(NavigationComponent)
+        spatials = entity_manager.get_components(SpatialComponent)
+        statuses = entity_manager.get_components(StatusComponent)
         available_tasks = self.task_manager.get_available_tasks()
 
         for entity_id, task_component in task_components.items():
-            status 			= statuses.get(entity_id)
-            navigation 	= navigations.get(entity_id)
-            spatial 		= spatials.get(entity_id)
+            status = statuses.get(entity_id)
+            navigation = navigations.get(entity_id)
+            spatial = spatials.get(entity_id)
 
             if not status:
                 continue
@@ -54,7 +55,25 @@ class TaskSystem:
                 continue
             if not available_tasks:
                 continue
-            selected_task = available_tasks.pop(0)
+
+            best_task = None
+            best_score = -999999
+
+            for task in available_tasks:
+                score = TaskScorer.score_task(spatial, task)
+                telemetry.metric(
+                    f"entity.{entity_id}" f".task_score." f"{task.task_id}", score
+                )
+                if score > best_score:
+                    best_score = score
+                    best_task = task
+
+            if not best_task:
+                continue
+
+            selected_task = best_task
+            available_tasks.remove(selected_task)
+
             self.task_manager.assign_task(selected_task.task_id, entity_id)
             task_component.current_task_id = selected_task.task_id
             navigation.target_x = selected_task.target_x
