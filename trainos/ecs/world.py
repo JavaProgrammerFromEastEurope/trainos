@@ -6,6 +6,7 @@ from trainos.ecs.systems.movement_system 	import MovementSystem
 from trainos.ecs.systems.battery_system 	import BatterySystem
 from trainos.ecs.systems.occupancy_system import OccupancySystem
 from trainos.ecs.systems.reservation_system import ReservationSystem
+from trainos.ecs.systems.task_system import TaskSystem
 from trainos.ecs.systems.telemetry_system import TelemetrySystem
 from trainos.ecs.systems.spatial_system 	import SpatialSystem
 
@@ -21,6 +22,8 @@ class ECSWorld:
     def _register_systems(self):
         # Occupancy of space
         self.scheduler.add_task(OccupancySystem(self.world),	tick_interval=1)
+        # Adding Task System
+        self.scheduler.add_task(TaskSystem(self.task_manager),tick_interval=5)
         # Navigation AI
         self.scheduler.add_task(NavigationSystem(self.world), tick_interval=10)
         # Local Avoidance System

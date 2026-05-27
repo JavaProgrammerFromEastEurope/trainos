@@ -15,19 +15,17 @@ class VelocityComponent:
 
 @dataclass(slots=True)
 class BatteryComponent:
-
+  
     level: float = 100.0
     consumption_rate: float = 0.5
 
 
 @dataclass(slots=True)
 class DroneComponent:
-
     drone_id: str
 
 @dataclass(slots=True)
 class StatusComponent:
-
     active: bool = True
 
 @dataclass(slots=True)
@@ -46,3 +44,7 @@ class NavigationComponent:
     path: list = field(default_factory=list)
     current_index: int = 0
     dirty: bool = True
+
+@dataclass(slots=True)
+class TaskComponent:
+    current_task_id: str | None = None

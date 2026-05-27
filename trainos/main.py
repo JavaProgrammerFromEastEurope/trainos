@@ -1,4 +1,5 @@
 from trainos.core.kernel 	import Kernel
+from trainos.tasks.task 	import Task
 from trainos.world.wagon 	import Wagon
 from trainos.world.sector import Sector
 
@@ -23,6 +24,16 @@ def build_world(kernel):
 def main():
     kernel = Kernel()
     build_world(kernel)
+    kernel.task_manager.add_task(
+    Task(
+        task_id				="repair_001",
+        task_type			="repair",
+        target_wagon	="wagon_001",
+        target_sector="reactor",
+        target_x=8,
+        target_y=8,
+        priority=10
+    ))
     kernel.boot()
 
 

@@ -6,6 +6,7 @@ from trainos.core.telemetry import Telemetry
 from trainos.core.persistence import PersistenceManager
 from trainos.simulation.simulation_clock import SimulationClock
 from trainos.simulation.tick import TickLoop
+from trainos.tasks.task_manager import TaskManager
 from trainos.world.world_grid import WorldGrid
 
 
@@ -23,6 +24,7 @@ class Kernel:
         self.telemetry = Telemetry()
         tick_rate = self.system_config["tick_rate"]
         self.tick = TickLoop(tick_rate)
+        self.task_manager = (TaskManager())
 
     def boot(self):
         self.telemetry.log("Kernel booting")
