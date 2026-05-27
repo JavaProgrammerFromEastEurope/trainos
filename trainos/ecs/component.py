@@ -48,6 +48,8 @@ class NavigationComponent:
 @dataclass(slots=True)
 class TaskComponent:
     current_task_id: str | None = None
+    executing_task: 			bool = False
+    cooperative: 					bool = False
 
 @dataclass(slots=True)
 class BatteryComponent:
@@ -62,7 +64,8 @@ class BatteryComponent:
 class ChargingStationComponent:
     station_id: str
     occupied: bool = False
-    charging_entity: int | None = None
+    charging_entity: 	int | None = None
+    reserved_by: 			int | None = None
 
 @dataclass(slots=True)
 class BatteryComponent:

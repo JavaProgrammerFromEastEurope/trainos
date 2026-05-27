@@ -16,15 +16,14 @@ class TaskSystem:
 
     def update(self, entity_manager, telemetry):
         task_components = entity_manager.get_components(TaskComponent)
-        navigations 		= entity_manager.get_components(NavigationComponent)
-        spatials 				= entity_manager.get_components(SpatialComponent)
-        statuses 				= entity_manager.get_components(StatusComponent)
-        batteries 			= entity_manager.get_components(BatteryComponent)
+        navigations = entity_manager.get_components(NavigationComponent)
+        spatials = entity_manager.get_components(SpatialComponent)
+        statuses = entity_manager.get_components(StatusComponent)
+        batteries = entity_manager.get_components(BatteryComponent)
         available_tasks = self.task_manager.get_available_tasks()
 
         for entity_id, task_component in task_components.items():
-
-            status 	= statuses.get(entity_id)
+            status = statuses.get(entity_id)
             navigation = navigations.get(entity_id)
             spatial = spatials.get(entity_id)
             battery = batteries.get(entity_id)
@@ -50,42 +49,37 @@ class TaskSystem:
             if battery.seeking_charge:
                 continue
 
+            # entity already busy
             if task_component.current_task_id is not None:
-                current_task = self.task_manager.tasks.get(
-                    task_component.current_task_id
-                )
-                if not current_task:
-                    task_component.current_task_id = None
-                    continue
-                reached_target = (
-                    spatial.cell_x == current_task.target_x
-                    and spatial.cell_y == current_task.target_y
-                )
-                if reached_target:
-                    current_task.completed = True
-                    telemetry.log(
-                        f"Entity {entity_id} "
-                        f"completed task "
-                        f"{current_task.task_id}"
-                    )
-                    task_component.current_task_id = None
                 continue
+
             if not available_tasks:
                 continue
 
             best_task = None
             best_score = -999999
+
             for task in available_tasks:
+                if task.completed:
+                    continue
+
+                if task.worker_count >= task.required_workers:
+                    continue
+
                 score = TaskScorer.score_task(spatial, task)
                 telemetry.metric(
                     f"entity.{entity_id}" f".task_score." f"{task.task_id}", score
                 )
+
                 if score > best_score:
                     best_score = score
                     best_task = task
+
             if not best_task:
                 continue
+
             selected_task = best_task
+            selected_task.assigned_entity = entity_id
             available_tasks.remove(selected_task)
             self.task_manager.assign_task(selected_task.task_id, entity_id)
             task_component.current_task_id = selected_task.task_id
@@ -95,3 +89,4 @@ class TaskSystem:
             telemetry.log(
                 f"Entity {entity_id} " f"accepted task " f"{selected_task.task_id}"
             )
+            telemetry.metric(f"entity.{entity_id}.task", selected_task.task_id)

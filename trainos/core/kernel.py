@@ -18,9 +18,9 @@ from trainos.ecs.component import (
     BatteryComponent,
     ChargingStationComponent,
 )
-
 from trainos.ecs.systems.occupancy_system import OccupancySystem
 from trainos.ecs.systems.battery_system import BatterySystem
+from trainos.ecs.systems.charging_reservation_system import ChargingReservationSystem
 from trainos.ecs.systems.energy_ai_system import EnergyAISystem
 from trainos.ecs.systems.charging_system import ChargingSystem
 from trainos.ecs.systems.task_system import TaskSystem
@@ -28,15 +28,16 @@ from trainos.ecs.systems.navigation_system import NavigationSystem
 from trainos.ecs.systems.local_avoidance_system import LocalAvoidanceSystem
 from trainos.ecs.systems.reservation_system import ReservationSystem
 from trainos.ecs.systems.movement_system import MovementSystem
+from trainos.ecs.systems.task_execution_system import TaskExecutionSystem
 from trainos.ecs.systems.spatial_system import SpatialSystem
 
 
 class Kernel:
 
     def __init__(self):
-        self.world = WorldGrid()
+        self.world 	= WorldGrid()
         self.config = ConfigLoader()
-        self.clock = SimulationClock(tick_rate=60)
+        self.clock 	= SimulationClock(tick_rate=60)
         self.persistence = PersistenceManager()
         self.system_config = self.config.load("system.yaml")
         self.event_bus = EventBus()
@@ -48,12 +49,14 @@ class Kernel:
         self.entities = EntityManager()
         self.scheduler = Scheduler()
         self._register_systems()
-        self._spawn_test_drone()
+        self._spawn_test_drones()
         self._spawn_charging_station()
 
     def _register_systems(self):
+
         self.scheduler.add_task(OccupancySystem(self.world), tick_interval=1)
         self.scheduler.add_task(BatterySystem(), tick_interval=1)
+        self.scheduler.add_task(ChargingReservationSystem(), tick_interval=1)
         self.scheduler.add_task(EnergyAISystem(), tick_interval=1)
         self.scheduler.add_task(ChargingSystem(), tick_interval=1)
         self.scheduler.add_task(TaskSystem(self.task_manager), tick_interval=1)
@@ -61,23 +64,24 @@ class Kernel:
         self.scheduler.add_task(LocalAvoidanceSystem(self.world), tick_interval=1)
         self.scheduler.add_task(ReservationSystem(self.world), tick_interval=1)
         self.scheduler.add_task(MovementSystem(), tick_interval=1)
+        self.scheduler.add_task(TaskExecutionSystem(self.task_manager), tick_interval=1)
         self.scheduler.add_task(SpatialSystem(), tick_interval=1)
 
-    def _spawn_test_drone(self):
-        entity_id = self.entities.create_entity()
-        self.entities.add_component(
-            entity_id,
-            SpatialComponent(
-                wagon_id="wagon_001", sector_id="reactor", cell_x=1, cell_y=1
-            ),
-        )
-
-        self.entities.add_component(entity_id, VelocityComponent())
-        self.entities.add_component(entity_id, NavigationComponent())
-        self.entities.add_component(entity_id, StatusComponent(active=True))
-        self.entities.add_component(entity_id, TaskComponent())
-        self.entities.add_component(entity_id, BatteryComponent())
-        self.telemetry.log(f"Spawned drone " f"{entity_id}")
+    def _spawn_test_drones(self):
+        for i in range(3):
+            entity_id = self.entities.create_entity()
+            self.entities.add_component(
+                entity_id,
+                SpatialComponent(
+                    wagon_id="wagon_001", sector_id="reactor", cell_x=1 + i, cell_y=1
+                ),
+            )
+            self.entities.add_component(entity_id, VelocityComponent())
+            self.entities.add_component(entity_id, NavigationComponent())
+            self.entities.add_component(entity_id, StatusComponent(active=True))
+            self.entities.add_component(entity_id, TaskComponent())
+            self.entities.add_component(entity_id, BatteryComponent())
+            self.telemetry.log(f"Spawned drone " f"{entity_id}")
 
     def _spawn_charging_station(self):
         entity_id = self.entities.create_entity()

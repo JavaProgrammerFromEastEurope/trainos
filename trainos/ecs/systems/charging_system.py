@@ -52,7 +52,9 @@ class ChargingSystem:
                     battery.charging = True
 
                     if battery.current_energy >= battery.max_energy:
-                        station.occupied = False
+                        station.occupied 				= False
                         station.charging_entity = None
-                        battery.charging = False
+                        battery.charging 				= False
+                        battery.seeking_charge 	= False
+                        station.reserved_by 		= None
                         telemetry.log(f"Entity {entity_id} " f"left charging station")
