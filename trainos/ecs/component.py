@@ -15,7 +15,7 @@ class VelocityComponent:
 
 @dataclass(slots=True)
 class BatteryComponent:
-  
+
     level: float = 100.0
     consumption_rate: float = 0.5
 
@@ -48,3 +48,18 @@ class NavigationComponent:
 @dataclass(slots=True)
 class TaskComponent:
     current_task_id: str | None = None
+
+@dataclass(slots=True)
+class BatteryComponent:
+    current_energy: float = 100.0
+    max_energy: float = 100.0
+    passive_drain: float = 0.02
+    movement_drain: float = 0.15
+    charging: bool = False
+    critical_threshold: float = 15.0
+
+@dataclass(slots=True)
+class ChargingStationComponent:
+    station_id: str
+    occupied: bool = False
+    charging_entity: int | None = None
