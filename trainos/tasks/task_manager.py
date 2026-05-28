@@ -1,26 +1,45 @@
 class TaskManager:
 
     def __init__(self):
+        #
+        # task_id -> Task
+        #
         self.tasks = {}
 
+    #
+    # REGISTER TASK
+    #
     def add_task(self, task):
         self.tasks[task.task_id] = task
 
+    #
+    # REMOVE TASK
+    #
     def remove_task(self, task_id):
         if task_id in self.tasks:
             del self.tasks[task_id]
 
+    #
+    # GET TASK
+    #
     def get_task(self, task_id):
         return self.tasks.get(task_id)
 
-    def get_all_tasks(self):
-        return list(self.tasks.values())
-
+    #
+    # AVAILABLE TASKS
+    #
+    # Returns:
+    # tasks that:
+    # - are not completed
+    # - are not failed
+    # - are not cancelled
+    # - still need workers
+    #
     def get_available_tasks(self):
         available = []
         for task in self.tasks.values():
             #
-            # TASK FINISHED
+            # SKIP FINISHED TASKS
             #
             if task.completed:
                 continue
@@ -29,90 +48,90 @@ class TaskManager:
             if task.cancelled:
                 continue
             #
-            # ENOUGH WORKERS
+            # TASK FULL
             #
-            if task.worker_count >= task.required_workers:
+            if len(task.assigned_entities) >= task.required_workers:
                 continue
             available.append(task)
+        #
+        # SORT BY PRIORITY
+        #
+        # highest priority first
+        #
+        available.sort(key=lambda task: task.priority, reverse=True)
         return available
 
-    def get_active_tasks(self):
-        active = []
-        for task in self.tasks.values():
-            if task.completed:
+    #
+    # ENTITY TASKS
+    #
+    def get_tasks_for_entity_role(self, role):
+        compatible = []
+        for task in self.get_available_tasks():
+            #
+            # NO ROLE REQUIRED
+            #
+            if task.required_role is None:
+                compatible.append(task)
                 continue
-            if task.failed:
-                continue
-            if task.cancelled:
-                continue
-            if task.worker_count <= 0:
-                continue
-            active.append(task)
-        return active
+            #
+            # ROLE MATCH
+            #
+            if task.required_role == role:
+                compatible.append(task)
+        return compatible
 
-    def assign_task(self, task_id, entity_id):
+    #
+    # ASSIGN ENTITY
+    #
+    def assign_entity_to_task(self, entity_id, task_id):
         task = self.tasks.get(task_id)
         if not task:
             return False
+        #
+        # TASK FINISHED
+        #
         if task.completed:
             return False
         if task.failed:
             return False
         if task.cancelled:
             return False
-        if task.worker_count >= task.required_workers:
+        #
+        # TASK FULL
+        #
+        if len(task.assigned_entities) >= task.required_workers:
             return False
-        if entity_id in task.assigned_entities:
-            return False
-        task.assign(entity_id)
+        #
+        # ALREADY ASSIGNED
+        #
+        if entity_id in (task.assigned_entities):
+            return True
+        #
+        # ASSIGN
+        #
+        task.assign_entity(entity_id)
         return True
 
-    def unassign_task(self, task_id, entity_id):
+    #
+    # UNASSIGN ENTITY
+    #
+    def unassign_entity_from_task(self, entity_id, task_id):
         task = self.tasks.get(task_id)
         if not task:
             return
-        task.unassign(entity_id)
+        task.unassign_entity(entity_id)
 
-    def complete_task(self, task_id):
-        task = self.tasks.get(task_id)
-        if not task:
-            return
-        task.mark_completed()
-
-    def fail_task(self, task_id):
-        task = self.tasks.get(task_id)
-        if not task:
-            return
-        task.mark_failed()
-
-    def cancel_task(self, task_id):
-        task = self.tasks.get(task_id)
-        if not task:
-            return
-        task.cancel()
-
-    def reset_task(self, task_id):
-        task = self.tasks.get(task_id)
-        if not task:
-            return
-        task.reset()
-
-    def advance_task(self, task_id, amount=1.0):
-        task = self.tasks.get(task_id)
-        if not task:
-            return
-        task.advance(amount)
-
-    def debug_summary(self):
-        summary = []
-        for task in self.tasks.values():
-            summary.append(
-                {
-                    "task_id": task.task_id,
-                    "workers": (task.worker_count),
-                    "required": (task.required_workers),
-                    "progress": (task.progress),
-                    "completed": (task.completed),
-                }
-            )
-        return summary
+    #
+    # CLEAN FINISHED TASKS
+    #
+    def cleanup_tasks(self):
+        to_remove = []
+        for task_id, task in self.tasks.items():
+            if task.completed:
+                to_remove.append(task_id)
+            elif task.failed:
+                to_remove.append(task_id)
+            elif task.cancelled:
+                to_remove.append(task_id)
+        for task_id in to_remove:
+            del self.tasks[task_id]

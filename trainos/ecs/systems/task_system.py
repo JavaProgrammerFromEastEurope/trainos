@@ -1,13 +1,10 @@
 from trainos.ecs.component import (
     TaskComponent,
-    NavigationComponent,
     SpatialComponent,
+    NavigationComponent,
     StatusComponent,
-    BatteryComponent,
-    RoleComponent,
+    DroneComponent,
 )
-
-from trainos.tasks.task_scorer import TaskScorer
 
 
 class TaskSystem:
@@ -16,77 +13,105 @@ class TaskSystem:
         self.task_manager = task_manager
 
     def update(self, entity_manager, telemetry):
+        #
+        # COMPONENT TABLES
+        #
         task_components = entity_manager.get_components(TaskComponent)
+        spatials 				= entity_manager.get_components(SpatialComponent)
         navigations 		= entity_manager.get_components(NavigationComponent)
-        spatials = entity_manager.get_components(SpatialComponent)
-        statuses = entity_manager.get_components(StatusComponent)
-        batteries = entity_manager.get_components(BatteryComponent)
-        roles 		= entity_manager.get_components(RoleComponent)
+        statuses 				= entity_manager.get_components(StatusComponent)
+        drones 					= entity_manager.get_components(DroneComponent)
+        #
+        # AVAILABLE TASKS
+        #
         available_tasks = self.task_manager.get_available_tasks()
-
+        #
+        # NO TASKS
+        #
+        if not available_tasks:
+            return
+        #
+        # PROCESS ENTITIES
+        #
         for entity_id, task_component in task_components.items():
-            status 		= statuses.get(entity_id)
-            navigation = navigations.get(entity_id)
-            spatial 	= spatials.get(entity_id)
-            battery 	= batteries.get(entity_id)
-            role_component = roles.get(entity_id)
-
-            if not status:
+            #
+            # ALREADY BUSY
+            #
+            if task_component.current_task_id is not None:
                 continue
-            if not navigation:
+            #
+            # REQUIRED COMPONENTS
+            #
+            status = statuses.get(entity_id)
+            spatial = spatials.get(entity_id)
+            navigation = navigations.get(entity_id)
+            drone = drones.get(entity_id)
+            if not status:
                 continue
             if not spatial:
                 continue
-            if not battery:
+            if not navigation:
                 continue
-            if not role_component:
+            if not drone:
                 continue
+            #
+            # ENTITY DISABLED
+            #
             if not status.active:
                 continue
-            if battery.charging:
-                continue
-            if battery.seeking_charge:
-                continue
-            if task_component.current_task_id is not None:
-                continue
-            if not available_tasks:
-                continue
-
-            best_task = None
-            best_score = -999999
-
+            #
+            # FIND BEST TASK
+            #
+            selected_task = None
             for task in available_tasks:
-                if task.completed:
+                #
+                # TASK FULL
+                #
+                if len(task.assigned_entities) >= task.required_workers:
                     continue
-                if task.failed:
-                    continue
-                if task.cancelled:
-                    continue
-                if task.worker_count >= task.required_workers:
-                    continue
+                #
+                # ROLE CHECK
+                #
                 if task.required_role is not None:
-                    if role_component.role != task.required_role:
+                    if drone.role != task.required_role:
                         continue
-
-                score = TaskScorer.score_task(spatial, task)
-                telemetry.metric(
-                    f"entity.{entity_id}" f".task_score." f"{task.task_id}", score
-                )
-                if score > best_score:
-                    best_score 	= score
-                    best_task 	= task
-
-            if not best_task:
+                #
+                # ACCEPT TASK
+                #
+                selected_task = task
+                break
+            #
+            # NOTHING FOUND
+            #
+            if not selected_task:
                 continue
-
-            selected_task = best_task
-            selected_task.assign(entity_id)
+            #
+            # ASSIGN ENTITY
+            #
+            success = self.task_manager.assign_entity_to_task(
+                entity_id, selected_task.task_id
+            )
+            if not success:
+                continue
+            #
+            # UPDATE ENTITY TASK
+            #
             task_component.current_task_id = selected_task.task_id
+            task_component.executing_task = False
             task_component.cooperative = selected_task.required_workers > 1
+            #
+            # NAVIGATION TARGET
+            #
             navigation.target_x = selected_task.target_x
             navigation.target_y = selected_task.target_y
+            #
+            # FORCE PATH REBUILD
+            #
+            navigation.path.clear()
             navigation.dirty = True
+            #
+            # LOG
+            #
             telemetry.log(
                 f"Entity {entity_id} " f"accepted task " f"{selected_task.task_id}"
             )
-            telemetry.metric(f"entity.{entity_id}.task", selected_task.task_id)

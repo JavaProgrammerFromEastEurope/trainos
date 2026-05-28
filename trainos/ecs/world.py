@@ -25,7 +25,7 @@ class ECSWorld:
         # Adding Battery System
         self.scheduler.add_task(BatterySystem(), tick_interval=1)
         # Adding Task System
-        self.scheduler.add_task(TaskSystem(self.task_manager), tick_interval=5)
+        self.scheduler.add_task(TaskSystem(self.task_manager), tick_interval=1)
         # Navigation AI
         self.scheduler.add_task(NavigationSystem(self.world), tick_interval=1)
         # Local Avoidance System

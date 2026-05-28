@@ -18,13 +18,6 @@ class VelocityComponent:
 
 
 @dataclass(slots=True)
-class BatteryComponent:
-
-    level: float = 100.0
-    consumption_rate: float = 0.5
-
-
-@dataclass(slots=True)
 class DroneComponent:
     drone_id: str
 
@@ -46,11 +39,25 @@ class SpatialComponent:
 @dataclass(slots=True)
 class NavigationComponent:
 
-    target_x: int = 0
-    target_y: int = 0
-    path: list = field(default_factory=list)
-    current_index: int = 0
-    dirty: bool = True
+    #
+    # TARGET (SET ONCE)
+    #
+    target_x: int | None = None
+    target_y: int | None = None
+    #
+    # PATH (COMPUTED ONCE)
+    #
+    path: list[tuple[int, int]] = field(default_factory=list)
+    #
+    # STATE FLAGS
+    #
+    dirty: bool 				= False
+    blocked_ticks: int 	= 0
+    destination_reached: bool = False
+    #
+    # INTERNAL CONTROL
+    #
+    last_target: tuple[int, int] | None = None
 
 
 @dataclass(slots=True)
@@ -62,12 +69,30 @@ class TaskComponent:
 
 @dataclass(slots=True)
 class BatteryComponent:
-    current_energy: float = 100.0
-    max_energy: float = 100.0
-    passive_drain: float = 0.02
-    movement_drain: float = 0.15
+    #
+    # CURRENT ENERGY
+    #
+    level: float = 100.0
+    #
+    # MAX ENERGY
+    #
+    max_level: float = 100.0
+    #
+    # ENERGY LOSS PER TICK
+    #
+    consumption_rate: float = 0.05
+    #
+    # CHARGING STATE
+    #
     charging: bool = False
-    critical_threshold: float = 15.0
+    #
+    # LOW ENERGY THRESHOLD
+    #
+    critical_threshold: float = 20.0
+    #
+    # AI STATE
+    #
+    seeking_charge: bool = False
 
 
 @dataclass(slots=True)
@@ -77,15 +102,6 @@ class ChargingStationComponent:
     charging_entity: int | None = None
     reserved_by: int | None = None
 
-
-@dataclass(slots=True)
-class BatteryComponent:
-    level: float 			= 100.0
-    max_level: float 	= 100.0
-    drain_rate: float = 0.05
-    charging: bool 		= False
-    seeking_charge: bool = False
-    reserved_station: str | None = None
 
 @dataclass(slots=True)
 class RoleComponent:

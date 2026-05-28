@@ -4,17 +4,12 @@ from trainos.ecs.component import PositionComponent, BatteryComponent, DroneComp
 class TelemetrySystem:
 
     def update(self, entity_manager, telemetry):
-
         positions = entity_manager.get_components(PositionComponent)
-
         batteries = entity_manager.get_components(BatteryComponent)
-
         drones 		= entity_manager.get_components(DroneComponent)
 
         for entity_id, drone in drones.items():
-
             position 	= positions.get(entity_id)
-
             battery 	= batteries.get(entity_id)
 
             if not position:
