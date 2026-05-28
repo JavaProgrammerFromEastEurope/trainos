@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field
 
+from trainos.ecs.roles import DroneRole
+
 
 @dataclass(slots=True)
 class PositionComponent:
@@ -7,11 +9,13 @@ class PositionComponent:
     x: float = 0.0
     y: float = 0.0
 
+
 @dataclass(slots=True)
 class VelocityComponent:
 
     dx: float = 0.0
     dy: float = 0.0
+
 
 @dataclass(slots=True)
 class BatteryComponent:
@@ -24,9 +28,11 @@ class BatteryComponent:
 class DroneComponent:
     drone_id: str
 
+
 @dataclass(slots=True)
 class StatusComponent:
     active: bool = True
+
 
 @dataclass(slots=True)
 class SpatialComponent:
@@ -35,6 +41,7 @@ class SpatialComponent:
     sector_id: str
     cell_x: int = 0
     cell_y: int = 0
+
 
 @dataclass(slots=True)
 class NavigationComponent:
@@ -45,11 +52,13 @@ class NavigationComponent:
     current_index: int = 0
     dirty: bool = True
 
+
 @dataclass(slots=True)
 class TaskComponent:
     current_task_id: str | None = None
-    executing_task: 			bool = False
-    cooperative: 					bool = False
+    executing_task: bool = False
+    cooperative: bool = False
+
 
 @dataclass(slots=True)
 class BatteryComponent:
@@ -59,20 +68,26 @@ class BatteryComponent:
     movement_drain: float = 0.15
     charging: bool = False
     critical_threshold: float = 15.0
+
 
 @dataclass(slots=True)
 class ChargingStationComponent:
     station_id: str
     occupied: bool = False
-    charging_entity: 	int | None = None
-    reserved_by: 			int | None = None
+    charging_entity: int | None = None
+    reserved_by: int | None = None
+
 
 @dataclass(slots=True)
 class BatteryComponent:
-    current_energy: float = 100.0
-    max_energy: float = 100.0
-    passive_drain: float = 0.02
-    movement_drain: float = 0.15
-    charging: bool = False
+    level: float 			= 100.0
+    max_level: float 	= 100.0
+    drain_rate: float = 0.05
+    charging: bool 		= False
     seeking_charge: bool = False
-    critical_threshold: float = 15.0
+    reserved_station: str | None = None
+
+@dataclass(slots=True)
+class RoleComponent:
+    role: DroneRole = DroneRole.GENERAL
+    efficiency: float = 1.0

@@ -1,4 +1,5 @@
 from trainos.core.kernel 	import Kernel
+from trainos.ecs.roles import DroneRole
 from trainos.tasks.task 	import Task
 from trainos.world.wagon 	import Wagon
 from trainos.world.sector import Sector
@@ -27,13 +28,16 @@ def main():
     build_world(kernel)
     kernel.task_manager.add_task(
     Task(
-        task_id				="repair_001",
-        task_type			="repair",
-        target_wagon	="wagon_001",
-        target_sector="reactor",
-        target_x=8,
-        target_y=8,
-        priority=10
+			task_id="reactor_repair",
+			task_type="repair",
+			target_wagon="wagon_001",
+			target_sector="reactor",
+			target_x=8,
+			target_y=8,
+			priority=20,
+			duration=500,
+			required_workers=2,
+			required_role=DroneRole.ENGINEER
     ))
     kernel.boot()
 
