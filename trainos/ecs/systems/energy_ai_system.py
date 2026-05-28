@@ -11,105 +11,114 @@ from trainos.ecs.component import (
 class EnergyAISystem:
 
     def update(self, entity_manager, telemetry):
-        batteries 			= entity_manager.get_components(BatteryComponent)
-        navigations 		= entity_manager.get_components(NavigationComponent)
-        spatials 				= entity_manager.get_components(SpatialComponent)
-        statuses 				= entity_manager.get_components(StatusComponent)
-        task_components = entity_manager.get_components(TaskComponent)
-        charging_stations = entity_manager.get_components(ChargingStationComponent)
-        #
-        # FIND ALL STATIONS
-        #
-        station_positions = []
-        for station_entity_id, station in charging_stations.items():
-            station_spatial = spatials.get(station_entity_id)
 
+        batteries 	= entity_manager.get_components(BatteryComponent)
+        navigations = entity_manager.get_components(NavigationComponent)
+        spatials 		= entity_manager.get_components(SpatialComponent)
+        statuses 		= entity_manager.get_components(StatusComponent)
+        tasks 			= entity_manager.get_components(TaskComponent)
+        stations 		= entity_manager.get_components(ChargingStationComponent)
+
+        # -------------------------
+        # PREBUILD STATION CACHE
+        # -------------------------
+        station_cache = []
+        for station_id, station in stations.items():
+            station_spatial = spatials.get(station_id)
             if not station_spatial:
                 continue
-            station_positions.append((station.station_id, station_spatial))
-        #
-        # PROCESS ENTITIES
-        #
-        for entity_id, battery in batteries.items():
-            navigation = navigations.get(entity_id)
-            spatial = spatials.get(entity_id)
-            status = statuses.get(entity_id)
-            task_component = task_components.get(entity_id)
 
-            if not navigation:
+            station_cache.append((station_id, station, station_spatial))
+
+        # -------------------------
+        # MAIN LOOP
+        # -------------------------
+        for entity_id, battery in batteries.items():
+            navigation 	= navigations.get(entity_id)
+            spatial 		= spatials.get(entity_id)
+            status 			= statuses.get(entity_id)
+            task 				= tasks.get(entity_id)
+
+            if not navigation or not spatial or not status or not task:
                 continue
-            if not spatial:
-                continue
-            if not status:
-                continue
-            if not task_component:
-                continue
+
             if not status.active:
                 continue
-            #
+
+            # -------------------------
             # BATTERY PERCENT
-            #
+            # -------------------------
             battery_percent = (battery.level / battery.max_level) * 100
-            #
-            # ENERGY RECOVERED
-            #
+
+            # -------------------------
+            # RECOVERY STATE
+            # -------------------------
             if battery_percent > 35:
                 if battery.seeking_charge:
                     battery.seeking_charge = False
-                    telemetry.log(f"Entity {entity_id} " f"energy stabilized")
-            #
-            # LOW ENERGY DECISION
-            #
-            low_energy = battery_percent <= 25
-            if not low_energy:
+                    battery.reserved_station = None
+                    telemetry.log(f"Entity {entity_id} energy stabilized")
+
+            # -------------------------
+            # LOW ENERGY CHECK
+            # -------------------------
+            if battery_percent > 25:
                 continue
-            #
-            # ALREADY CHARGING
-            #
+
+            # already in charging logic
             if battery.charging:
                 continue
-            #
-            # ALREADY SEEKING
-            #
-            if battery.seeking_charge:
+
+            # already assigned → do NOT recalc every tick
+            if battery.seeking_charge and battery.reserved_station is not None:
                 continue
-            #
-            # FIND CLOSEST STATION
-            #
-            closest_station = None
-            closest_distance = 999999
-            for station_id, station_spatial in station_positions:
-                dx = abs(spatial.cell_x - station_spatial.cell_x)
-                dy = abs(spatial.cell_y - station_spatial.cell_y)
-                distance = dx + dy
-                if distance < closest_distance:
-                    closest_distance = distance
-                    closest_station = station_spatial
-                    battery.reserved_station = station_id
-            #
-            # NO STATION FOUND
-            #
-            if not closest_station:
-                telemetry.log(f"Entity {entity_id} " f"cannot find charging station")
+
+            # -------------------------
+            # FIND BEST STATION
+            # -------------------------
+            best_station = None
+            best_distance = 10**9
+
+            for station_id, station, station_spatial in station_cache:
+
+                if station.occupied:
+                    continue
+
+                if station.reserved_by is not None:
+                    continue
+
+                dx = spatial.cell_x - station_spatial.cell_x
+                dy = spatial.cell_y - station_spatial.cell_y
+                dist = abs(dx) + abs(dy)
+
+                if dist < best_distance:
+                    best_distance = dist
+                    best_station = (station_id, station, station_spatial)
+
+            if not best_station:
+                telemetry.log(f"Entity {entity_id} cannot find charging station")
                 continue
-            #
-            # OVERRIDE TASK
-            #
-            if task_component.current_task_id is not None:
-                telemetry.log(f"Entity {entity_id} " f"interrupting task for charging")
-                task_component.current_task_id = None
-                task_component.executing_task = False
-                task_component.cooperative = False
-            #
-            # SEEK CHARGING
-            #
+            station_id, station, station_spatial = best_station
+
+            # -------------------------
+            # TASK INTERRUPT (ONCE ONLY)
+            # -------------------------
+            if task.current_task_id is not None:
+                telemetry.log(f"Entity {entity_id} interrupting task for charging")
+                task.current_task_id = None
+                task.executing_task = False
+                task.cooperative = False
+
+            # -------------------------
+            # ASSIGN CHARGING GOAL
+            # -------------------------
             battery.seeking_charge = True
-            navigation.target_x = closest_station.cell_x
-            navigation.target_y = closest_station.cell_y
-            navigation.dirty = True
-            telemetry.log(
-                f"Entity {entity_id} "
-                f"seeking charging station "
-                f"{battery.reserved_station}"
-            )
+            battery.reserved_station = station_id
+            navigation.target_x = station_spatial.cell_x
+            navigation.target_y = station_spatial.cell_y
+            
+            # IMPORTANT: only mark dirty ONCE
+            if not navigation.dirty:
+                navigation.dirty = True
+            telemetry.log(f"Entity {entity_id} seeking charging station {station_id}")
             telemetry.metric(f"entity.{entity_id}.charging", 1)
