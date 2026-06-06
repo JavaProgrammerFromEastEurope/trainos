@@ -3,20 +3,14 @@ from trainos.ecs.component import (
     BatteryComponent,
     DroneComponent,
     NavigationComponent,
-    TaskComponent,
     StatusComponent,
 )
 
 
 class TelemetrySystem:
 
-    def __init__(self):
-        #
-        # REDUCE LOG SPAM
-        #
-        self.last_snapshot_tick = -1
-
     def update(self, entity_manager, telemetry):
+
         #
         # COMPONENT TABLES
         #
@@ -24,21 +18,19 @@ class TelemetrySystem:
         batteries = entity_manager.get_components(BatteryComponent)
         drones = entity_manager.get_components(DroneComponent)
         navigations = entity_manager.get_components(NavigationComponent)
-        tasks = entity_manager.get_components(TaskComponent)
         statuses = entity_manager.get_components(StatusComponent)
         #
         # ITERATE DRONES
         #
+
         for entity_id, drone in drones.items():
+            position = positions.get(entity_id)
+            battery = batteries.get(entity_id)
+            navigation = navigations.get(entity_id)
+            status = statuses.get(entity_id)
             #
             # REQUIRED COMPONENTS
             #
-            position 		= positions.get(entity_id)
-            battery 		= batteries.get(entity_id)
-            navigation 	= navigations.get(entity_id)
-            task 				= tasks.get(entity_id)
-            status 			= statuses.get(entity_id)
-
             if not position:
                 continue
             if not battery:
@@ -46,49 +38,33 @@ class TelemetrySystem:
             if not status:
                 continue
             #
-            # ENTITY STATE
-            #
-            state = "ACTIVE"
-            if not status.active:
-                state = "DISABLED"
-            elif battery.charging:
-                state = "CHARGING"
-            elif battery.seeking_charge:
-                state = "SEEKING_CHARGE"
-            elif task and task.executing_task:
-                state = "WORKING"
-            elif navigation and navigation.moving:
-                state = "MOVING"
-            #
-            # TARGET INFO
+            # TARGET
             #
             target_info = "NONE"
-            if navigation and navigation.target:
+            if (
+                navigation
+                and navigation.target_x is not None
+                and navigation.target_y is not None
+            ):
                 target_info = f"{navigation.target_x}," f"{navigation.target_y}"
             #
-            # TASK INFO
-            #
-            task_info = "IDLE"
-            if task and task.current_task_id:
-                task_info = task.current_task_id
-            #
-            # PATH INFO
+            # PATH LENGTH
             #
             path_length = 0
-            if navigation and navigation.path:
+            if navigation:
                 path_length = len(navigation.path)
             #
-            # OUTPUT
+            # PRINT SNAPSHOT
             #
             print(
                 f"[DRONE] "
                 f"id={entity_id} "
                 f"drone={drone.drone_id} "
                 f"role={drone.role} "
-                f"state={state} "
+                f"state={drone.state} "
                 f"pos=({position.x},{position.y}) "
-                f"battery={round(battery.level, 1)}% "
-                f"task={task_info} "
+                f"battery={round(battery.level,1)}/{battery.max_level} "
+                f"task={drone.assigned_task or 'IDLE'} "
                 f"target={target_info} "
                 f"path={path_length}"
             )
@@ -98,6 +74,13 @@ class TelemetrySystem:
             telemetry.metric(
                 f"entity.{entity_id}.battery",
                 round(battery.level, 2),
+            )
+            telemetry.metric(
+                f"entity.{entity_id}.battery_percent",
+                round(
+                    battery.level / battery.max_level * 100,
+                    2,
+                ),
             )
             telemetry.metric(
                 f"entity.{entity_id}.x",
@@ -111,6 +94,14 @@ class TelemetrySystem:
                 f"entity.{entity_id}.active",
                 int(status.active),
             )
+            telemetry.metric(
+                f"entity.{entity_id}.can_move",
+                int(drone.can_move),
+            )
+            telemetry.metric(
+                f"entity.{entity_id}.busy",
+                int(drone.is_busy),
+            )
             if navigation:
                 telemetry.metric(
                     f"entity.{entity_id}.blocked_ticks",
@@ -118,5 +109,9 @@ class TelemetrySystem:
                 )
                 telemetry.metric(
                     f"entity.{entity_id}.path_length",
-                    path_length,
+                    len(navigation.path),
+                )
+                telemetry.metric(
+                    f"entity.{entity_id}.destination_reached",
+                    int(navigation.destination_reached),
                 )

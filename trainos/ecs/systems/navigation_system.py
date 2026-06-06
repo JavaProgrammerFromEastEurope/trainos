@@ -11,107 +11,113 @@ class NavigationSystem:
     def update(self, entity_manager, telemetry):
 
         navigations = entity_manager.get_components(NavigationComponent)
-        spatials = entity_manager.get_components(SpatialComponent)
-
+        spatials 		= entity_manager.get_components(SpatialComponent)
         for entity_id, nav in navigations.items():
-
             spatial = spatials.get(entity_id)
-
+            #
+            # REQUIRED COMPONENTS
+            #
             if not spatial:
                 continue
+            #
+            # NO TARGET
+            #
 
-            # --------------------------------------------------
-            # NO TARGET → IDLE
-            # --------------------------------------------------
-            if nav.target_x is None or nav.target_y is None:
+            if nav.target_x is None:
                 continue
 
-            current_target = (nav.target_x, nav.target_y)
-
-            # --------------------------------------------------
-            # INIT SAFETY FIELDS (FIX #1)
-            # --------------------------------------------------
-            if not hasattr(nav, "last_target"):
-                nav.last_target = None
-
-            if not hasattr(nav, "blocked_ticks"):
-                nav.blocked_ticks = 0
-
-            if not hasattr(nav, "destination_reached"):
-                nav.destination_reached = False
-
-            if not hasattr(nav, "cooldown"):
-                nav.cooldown = 0
-
-            # --------------------------------------------------
-            # ALREADY AT TARGET
-            # --------------------------------------------------
-            if (spatial.cell_x, spatial.cell_y) == current_target:
-                nav.path = []
+            if nav.target_y is None:
+                continue
+            current_target = (
+                nav.target_x,
+                nav.target_y,
+            )
+            #
+            # ALREADY AT DESTINATION
+            #
+            if (
+                spatial.cell_x,
+                spatial.cell_y,
+            ) == current_target:
+                nav.path.clear()
                 nav.destination_reached = True
                 nav.dirty = False
-                nav.blocked_ticks = 0
+                nav.blocked_ticks 	= 0
+                nav.cooldown_ticks 	= 0
                 continue
-
-            # --------------------------------------------------
-            # TARGET CHANGE DETECTION
-            # --------------------------------------------------
+            #
+            # TARGET CHANGED
+            #
             if nav.last_target != current_target:
-                nav.dirty = True
                 nav.last_target = current_target
                 nav.destination_reached = False
-                nav.cooldown = 0
-
-            # --------------------------------------------------
-            # COOLDOWN AFTER FAILURE (FIX #2)
-            # --------------------------------------------------
-            if nav.cooldown > 0:
-                nav.cooldown -= 1
+                nav.dirty = True
+                nav.cooldown_ticks = 0
+            #
+            # COOLDOWN
+            #
+            if nav.cooldown_ticks > 0:
+                nav.cooldown_ticks -= 1
                 continue
-
-            # --------------------------------------------------
-            # DO NOT REBUILD IF PATH STILL VALID
-            # --------------------------------------------------
+            #
+            # PATH STILL VALID
+            #
             if nav.path and not nav.dirty:
                 continue
-
-            # --------------------------------------------------
-            # BLOCKED PATH BACKOFF
-            # --------------------------------------------------
-            if nav.blocked_ticks > 3:
-                nav.cooldown = 5
-                nav.blocked_ticks = 0
-                nav.dirty = True
-
-            # --------------------------------------------------
+            #
+            # REBUILD BACKOFF
+            #
+            if nav.blocked_ticks >= nav.max_blocked_ticks:
+                nav.cooldown_ticks 	= nav.repath_cooldown
+                nav.blocked_ticks 	= 0
+                telemetry.log(f"Entity {entity_id} navigation cooldown")
+                continue
+            #
+            # WORLD LOOKUP
+            #
+            wagon = self.world.get_wagon(spatial.wagon_id)
+            if not wagon:
+                continue
+            sector = wagon.sectors.get(spatial.sector_id)
+            if not sector:
+                continue
+            #
             # PATHFINDING
-            # --------------------------------------------------
-            start = (spatial.cell_x, spatial.cell_y)
-            goal = current_target
-
-            walkable = self.occupancy_map.get_walkable_set(
-                spatial.wagon_id,
-                spatial.sector_id,
+            #
+            start = (
+                spatial.cell_x,
+                spatial.cell_y,
             )
-            path = astar.find_path(start, goal, walkable)
-
-            # --------------------------------------------------
+            goal = current_target
+            path = astar(
+                sector=sector,
+                start=start,
+                goal=goal,
+                occupancy_map=self.occupancy_map,
+                ignore_entity=entity_id,
+            )
+            #
             # FAILED PATH
-            # --------------------------------------------------
+            #
             if not path:
                 nav.blocked_ticks += 1
                 nav.dirty = False
-
                 telemetry.log(
-                    f"Entity {entity_id} path blocked (tick {nav.blocked_ticks})"
+                    f"Entity {entity_id} " f"path blocked " f"({nav.blocked_ticks})"
                 )
                 continue
-
-            # --------------------------------------------------
-            # SUCCESS PATH
-            # --------------------------------------------------
-            nav.path = path
+            #
+            # REMOVE CURRENT CELL
+            #
+            if path and path[0] == start:
+                path = path[1:]
+            #
+            # SUCCESS
+            #
+            nav.path 	= path
             nav.dirty = False
-            nav.blocked_ticks = 0
-            nav.cooldown = 0
-            telemetry.log(f"Entity {entity_id} path rebuilt ({len(path)} steps)")
+            nav.blocked_ticks 	= 0
+            nav.cooldown_ticks 	= 0
+            telemetry.log(
+                f"Entity {entity_id} " f"path rebuilt " f"({len(path)} steps)"
+            )
