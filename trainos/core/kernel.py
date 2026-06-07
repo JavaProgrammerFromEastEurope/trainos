@@ -8,7 +8,7 @@ from trainos.core.persistence import PersistenceManager
 from trainos.simulation.simulation_clock import SimulationClock
 from trainos.simulation.tick import TickLoop
 
-from trainos.world.world_grid import WorldGrid
+from trainos.world.world import WorldGrid
 from trainos.world.occupancy_map import OccupancyMap
 
 from trainos.tasks.task_manager import TaskManager

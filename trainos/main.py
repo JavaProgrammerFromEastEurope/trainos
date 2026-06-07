@@ -1,7 +1,7 @@
 from trainos.core.kernel import Kernel
 from trainos.tasks.task import Task
-from trainos.world.wagon import Wagon
-from trainos.world.sector import Sector
+from trainos.world.wagons import Wagon
+from trainos.world.sectors import Sector
 
 
 def build_world(kernel):
