@@ -1,9 +1,0 @@
-default_drone:
-
-  battery: 100
-
-  movement_cost: 0.5
-
-  spawn:
-    x: 0
-    y: 0

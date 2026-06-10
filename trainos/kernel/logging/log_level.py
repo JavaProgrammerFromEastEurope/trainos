@@ -1,0 +1,15 @@
+# kernel/logging/log_level.py
+
+from __future__ import annotations
+
+from enum import IntEnum
+
+
+class LogLevel(IntEnum):
+
+    DEBUG 		= 10
+    INFO 			= 20
+    WARNING 	= 30
+    ERROR 		= 40
+    CRITICAL 	= 50
+
