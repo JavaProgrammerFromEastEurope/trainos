@@ -3,7 +3,7 @@ from trainos.kernel.events.event import Event
 from trainos.kernel.events.event_handler import EventHandler
 
 
-class TestHandler(EventHandler):
+class DummyHandler(EventHandler):
     def __init__(self):
         self.events = []
 
@@ -13,7 +13,7 @@ class TestHandler(EventHandler):
 
 def test_event_bus_publish_subscribe():
     bus = EventBus()
-    handler = TestHandler()
+    handler = DummyHandler()
 
     bus.subscribe("test_event", handler)
 
