@@ -1,86 +1,61 @@
-from __future__ import annotations
-
-import heapq
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Callable, Optional
 
-from trainos.kernel.lifecycle.kernel_service import KernelService, ServiceState
 
+@dataclass
+class Task:
+    task_id: int
+    callback: Callable[[], None]
 
-@dataclass(order=True)
-class ScheduledTask:
-    sort_index: tuple = field(init=False, repr=False)
+    delay_seconds: float
+    interval_seconds: Optional[float]
+    repeat: bool
 
-    priority: int
-    task_id: int = field(compare=False)
-    callback: Callable[[], None] = field(compare=False)
+    next_fire: Optional[float] = None
 
-    delay_seconds: float = field(compare=False)
-    interval_seconds: Optional[float] = field(compare=False)
-    repeat: bool = field(compare=False)
+class SchedulerService:
 
-    next_fire: float = field(default=0.0, compare=False)
-
-    def __post_init__(self):
-        self.sort_index = (-self.priority, self.task_id)
-
-
-class SchedulerService(KernelService):
-
-	def __init__(self) -> None:
-			super().__init__(name="scheduler")
-
-			self._heap: list[ScheduledTask] = []
-			self._next_id = 1
-			self._time = 0.0
+	def __init__(self):
 			self._running = False
+			self._time = 0.0
+			self._tasks: list[Task] = []
+			self._id = 0
 
-	# ---------------- lifecycle ----------------
+	# ---------------- LIFECYCLE ----------------
 
 	def initialize(self) -> None:
-			self._set_state(ServiceState.INITIALIZED)
+			self._running = True
 
 	def start(self) -> None:
 			self._running = True
-			self._set_state(ServiceState.RUNNING)
 
 	def stop(self) -> None:
 			self._running = False
-			self._set_state(ServiceState.STOPPED)
 
-	# ---------------- scheduling ----------------
+	# ---------------- SCHEDULE ----------------
 
 	def schedule(
 			self,
-			callback: Callable[[], None],
+			task,
 			delay_seconds: float = 0.0,
-			interval_seconds: Optional[float] = None,
+			interval_seconds: float | None = None,
 			repeat: bool = False,
-			priority: int = 0,
-	) -> int:
+	) -> None:
 
-			task_id = self._next_id
-			self._next_id += 1
+			self._id += 1
 
-			task = ScheduledTask(
-					priority=priority,
-					task_id=task_id,
-					callback=callback,
-					delay_seconds=delay_seconds,
-					interval_seconds=interval_seconds,
-					repeat=repeat,
-					next_fire=delay_seconds,
+			self._tasks.append(
+					Task(
+							task_id=self._id,
+							callback=task,
+							delay_seconds=delay_seconds,
+							interval_seconds=interval_seconds,
+							repeat=repeat,
+							next_fire=None,
+					)
 			)
 
-			heapq.heappush(self._heap, task)
-
-			return task_id
-
-	def cancel(self, task_id: int) -> None:
-			self._heap = [t for t in self._heap if t.task_id != task_id]
-			heapq.heapify(self._heap)
-
-	# ---------------- core update ----------------
+	# ---------------- UPDATE CORE ----------------
 
 	def update(self, dt: float) -> None:
 
@@ -91,35 +66,40 @@ class SchedulerService(KernelService):
 
 			ready = []
 
-			for task in list(self._heap):
+			for task in list(self._tasks):
 
-					# ---------------- DELAY GATE ----------------
+					# ---------------- WAIT PHASE ----------------
 					if self._time < task.delay_seconds:
 							continue
 
-					# ---------------- FIRST FIRE LOGIC ----------------
-					if not hasattr(task, "_started"):
-							task._started = True
-							task.next_fire = task.delay_seconds
-							continue  # IMPORTANT: no execution in same tick
+					# ---------------- FIRST EXECUTION (EXACTLY ONCE) ----------------
+					if task.next_fire is None:
+							task.next_fire = self._time  # ❗ ключевой фикс
+
+							# execute ONLY if delay just reached in this tick window
+							if self._time - dt < task.delay_seconds <= self._time:
+									ready.append(task)
+
+							continue
 
 					# ---------------- PERIODIC ----------------
 					if task.interval_seconds is None:
-							ready.append(task)
 							continue
 
 					if self._time >= task.next_fire:
 							ready.append(task)
+							task.next_fire += task.interval_seconds
 
-			# deterministic ordering
-			ready.sort(key=lambda t: (-t.priority, t.task_id))
+			# deterministic order
+			ready.sort(key=lambda t: t.task_id)
 
 			for task in ready:
-
 					task.callback()
 
 					if task.interval_seconds is None:
-							self._remove(task.task_id)
-							continue
+							self._tasks.remove(task)
 
-					task.next_fire += task.interval_seconds
+	# ---------------- INTERNAL ----------------
+
+	def _remove(self, task_id: int) -> None:
+			self._tasks = [t for t in self._tasks if t.task_id != task_id]

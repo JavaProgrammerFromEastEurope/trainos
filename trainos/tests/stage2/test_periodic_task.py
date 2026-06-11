@@ -6,7 +6,6 @@ from trainos.kernel.scheduler.scheduler_service import SchedulerService
 def test_periodic_task():
 
     scheduler = SchedulerService()
-
     scheduler.initialize()
     scheduler.start()
 
