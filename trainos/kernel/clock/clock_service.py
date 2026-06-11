@@ -2,65 +2,61 @@
 
 from __future__ import annotations
 
-import time
-
-from trainos.kernel.lifecycle.kernel_service import KernelService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
+from trainos.kernel.clock.clock_state import ClockState
+from trainos.kernel.lifecycle.kernel_service import (
+    KernelService,
+    ServiceState,
+)
 
 
 class ClockService(KernelService):
 
     def __init__(self) -> None:
-
         super().__init__(
             name="clock",
-            startup_priority=1,
             dependencies=(),
         )
 
-        self._start_time 		= 0.0
-        self._current_time 	= 0.0
-        self._delta_time 		= 0.0
-        self._last_tick 		= 0.0
+        self._tick_count = 0
+        self._uptime_seconds = 0.0
+        self._delta_time = 0.0
+
+    @property
+    def tick_count(self) -> int:
+        return self._tick_count
+
+    @property
+    def uptime_seconds(self) -> float:
+        return self._uptime_seconds
+
+    @property
+    def delta_time(self) -> float:
+        return self._delta_time
+
+    @property
+    def state_snapshot(self) -> ClockState:
+        return ClockState(
+            tick_count=self._tick_count,
+            uptime_seconds=self._uptime_seconds,
+            delta_time=self._delta_time,
+        )
 
     def initialize(self) -> None:
-
         self._mark_initialized()
         self._set_state(ServiceState.INITIALIZED)
 
     def start(self) -> None:
-
-        self._set_state(ServiceState.STARTING)
-
-        self._start_time 		= time.time()
-        self._last_tick 		= self._start_time
-        self._current_time 	= self._start_time
         self._set_state(ServiceState.RUNNING)
 
     def update(self, dt: float) -> None:
-        now = time.time()
-        self._delta_time 		= now - self._last_tick
-        self._current_time 	= now
-        self._last_tick 		= now
+        self._delta_time = dt
+        self._uptime_seconds += dt
+        self._tick_count += 1
 
     def stop(self) -> None:
-        self._set_state(ServiceState.STOPPING)
         self._set_state(ServiceState.STOPPED)
 
     def dispose(self) -> None:
-        pass
-
-    def health_check(self) -> bool:
-        return not self.failed
-
-    @property
-    def now(self) -> float:
-        return self._current_time
-
-    @property
-    def delta(self) -> float:
-        return self._delta_time
-
-    @property
-    def uptime(self) -> float:
-        return self._current_time - self._start_time
+        self._tick_count = 0
+        self._uptime_seconds = 0.0
+        self._delta_time = 0.0
