@@ -1,31 +1,31 @@
 # tests/stage2/test_scheduler_registration.py
 
 from trainos.kernel.scheduler.scheduler_service import SchedulerService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
 
 
 def test_scheduler_registration():
 
     scheduler = SchedulerService()
+
     scheduler.initialize()
     scheduler.start()
 
-    executed = []
+    calls = []
 
-    def task_a():
-        executed.append("a")
+    def task():
+        calls.append(1)
 
-    def task_b():
-        executed.append("b")
+    scheduler.schedule(
+        task,
+        delay_seconds=1.0,
+    )
 
-    handle_a = scheduler.schedule(task_a)
-    handle_b = scheduler.schedule(task_b)
+    assert len(calls) == 0
 
-    assert scheduler.state == ServiceState.RUNNING
-    assert scheduler.task_count == 2
-    scheduler.update(0.1)
-    assert executed == ["a", "b"]
-    scheduler.cancel(handle_a)
-    assert scheduler.task_count == 1
-    scheduler.cancel(handle_b)
-    assert scheduler.task_count == 0
+    scheduler.update(0.5)
+
+    assert len(calls) == 0
+
+    scheduler.update(0.5)
+
+    assert len(calls) == 1

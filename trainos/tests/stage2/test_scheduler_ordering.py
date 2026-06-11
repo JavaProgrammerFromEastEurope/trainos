@@ -6,6 +6,7 @@ from trainos.kernel.scheduler.scheduler_service import SchedulerService
 def test_scheduler_ordering():
 
     scheduler = SchedulerService()
+
     scheduler.initialize()
     scheduler.start()
 
@@ -20,13 +21,25 @@ def test_scheduler_ordering():
     def task_c():
         result.append("c")
 
-    # priority encoded inside closure (compat mode)
+    scheduler.schedule(
+        task_b,
+        delay_seconds=1.0,
+    )
 
-    scheduler.schedule(lambda: task_b(), delay_seconds=0.0)
-    scheduler.schedule(lambda: task_c(), delay_seconds=0.0)
-    scheduler.schedule(lambda: task_a(), delay_seconds=0.0)
+    scheduler.schedule(
+        task_c,
+        delay_seconds=1.0,
+    )
 
-    scheduler.update(1.0)
+    scheduler.schedule(
+        task_a,
+        delay_seconds=1.0,
+    )
 
-    # NOTE: ordering must still be enforced internally by scheduler
+    scheduler.update(0.5)
+
+    assert result == []
+
+    scheduler.update(0.5)
+
     assert result == ["b", "c", "a"]
