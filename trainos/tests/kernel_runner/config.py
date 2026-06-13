@@ -46,4 +46,13 @@ STAGES: list[StageConfig] = [
             "tests/stage4",
         ],
     ),
+    #
+    # Stage 5
+    #
+    StageConfig(
+        name="stage5_decision_engine",
+        tests=[
+            "tests/stage5",
+        ],
+    ),
 ]
