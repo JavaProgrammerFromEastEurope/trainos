@@ -37,4 +37,13 @@ STAGES: list[StageConfig] = [
             "tests/stage3",
         ],
     ),
+    #
+    # Stage 4
+    #
+    StageConfig(
+        name="stage4_command_execution",
+        tests=[
+            "tests/stage4",
+        ],
+    ),
 ]
