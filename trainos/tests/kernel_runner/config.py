@@ -28,4 +28,13 @@ STAGES: list[StageConfig] = [
             "tests/stage2",
         ],
     ),
+    #
+    # Stage 3
+    #
+    StageConfig(
+        name="stage3_reactive",
+        tests=[
+            "tests/stage2",
+        ],
+    ),
 ]
