@@ -1,15 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any
-
-
-@dataclass
-class StateInspectionNode:
-
-    key: str
-    value: Any
-    type_name: str
+from trainos.kernel.state.debug.state_inspection_node import (
+    StateInspectionNode,
+)
 
 
 class StateInspector:
@@ -18,36 +11,56 @@ class StateInspector:
         self,
         state_service,
     ) -> None:
+
         self._state_service = state_service
 
-    def inspect(self) -> list[StateInspectionNode]:
-        result: list[StateInspectionNode] = []
-        for key, value in self._state_service._state.items():
-            result.append(
-                StateInspectionNode(
-                    key=key,
-                    value=value,
-                    type_name=type(value).__name__,
-                )
-            )
-        return result
-
-    def dump(self) -> dict[str, Any]:
-        return {key: value for key, value in self._state_service._state.items()}
-
-    def find(
+    def inspect(
         self,
-        prefix: str,
     ) -> list[StateInspectionNode]:
+
         result: list[StateInspectionNode] = []
-        for key, value in self._state_service._state.items():
-            if not key.startswith(prefix):
-                continue
+
+        for key, value in self._state_service._data.items():
+
             result.append(
                 StateInspectionNode(
                     key=key,
                     value=value,
-                    type_name=type(value).__name__,
+                    value_type=type(
+                        value,
+                    ).__name__,
                 )
             )
+
         return result
+
+    def keys(
+        self,
+    ) -> tuple[str, ...]:
+
+        return tuple(self._state_service._data.keys())
+
+    def values(
+        self,
+    ) -> tuple[object, ...]:
+
+        return tuple(self._state_service._data.values())
+
+    def has(
+        self,
+        key: str,
+    ) -> bool:
+
+        return key in (self._state_service._data)
+
+    def size(
+        self,
+    ) -> int:
+
+        return len(self._state_service._data)
+
+    def dump(
+        self,
+    ) -> dict[str, object]:
+
+        return dict(self._state_service._data)

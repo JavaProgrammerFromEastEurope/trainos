@@ -1,14 +1,18 @@
 from __future__ import annotations
 
-from trainos.kernel.state.state_service import StateService
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from trainos.kernel.state.state_service import StateService
 
 
 class StateController:
 
     def __init__(
         self,
-        state_service: StateService,
+        state_service: "StateService",
     ) -> None:
+
         self._state = state_service
         self._paused: bool = False
 
@@ -27,7 +31,12 @@ class StateController:
     def dump(self) -> dict:
         return self._state.snapshot().data
 
-    def replace(self, data: dict) -> None:
+    def replace(
+        self,
+        data: dict,
+    ) -> None:
+
         self._state.clear()
+
         for key, value in data.items():
             self._state.set(key, value)

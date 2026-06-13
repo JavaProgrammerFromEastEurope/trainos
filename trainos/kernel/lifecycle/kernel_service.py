@@ -41,7 +41,7 @@ class KernelService(ABC):
         self._startup_priority = startup_priority
         self._dependencies = dependencies
 
-        self._state = ServiceState.CREATED
+        self._state = ServiceState
 
         self._initialized = False
         self._failed = False

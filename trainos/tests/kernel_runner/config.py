@@ -34,7 +34,7 @@ STAGES: list[StageConfig] = [
     StageConfig(
         name="stage3_reactive",
         tests=[
-            "tests/stage2",
+            "tests/stage3",
         ],
     ),
 ]
