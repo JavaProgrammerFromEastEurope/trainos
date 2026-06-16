@@ -1,0 +1,2 @@
+class CognitiveScheduler:
+    pass
