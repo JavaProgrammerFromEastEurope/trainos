@@ -1,0 +1,2 @@
+class LifelongScheduler:
+    pass
