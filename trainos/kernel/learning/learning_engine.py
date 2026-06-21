@@ -7,10 +7,5 @@ from .learning_result import (
 
 class LearningEngine:
 
-    def train(
-        self,
-        data: list,
-    ) -> LearningResult:
-        return LearningResult(
-            improved=True,
-        )
+    def train(self, data: list) -> LearningResult:
+        return LearningResult(improved=True)
