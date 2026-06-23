@@ -91,13 +91,22 @@ STAGES: list[StageConfig] = [
     #         "tests/stage9",
     #     ],
     # ),
+    # #
+    # # Stage 10
+    # #
+    # StageConfig(
+    #     name="stage10_civilization_layer",
+    #     tests=[
+    #         "tests/stage10",
+    #     ],
+    # ),
     #
-    # Stage 10
+    # Stage 11
     #
     StageConfig(
-        name="stage10_civilization_layer",
+        name="stage11_metacivilization_layer",
         tests=[
-            "tests/stage10",
+            "tests/stage11",
         ],
     ),
 ]
