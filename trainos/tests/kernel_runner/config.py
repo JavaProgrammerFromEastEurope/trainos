@@ -100,13 +100,22 @@ STAGES: list[StageConfig] = [
     #         "tests/stage10",
     #     ],
     # ),
+    # #
+    # # Stage 11
+    # #
+    # StageConfig(
+    #     name="stage11_metacivilization_layer",
+    #     tests=[
+    #         "tests/stage11",
+    #     ],
+    # ),
     #
-    # Stage 11
+    # Stage 12
     #
     StageConfig(
-        name="stage11_metacivilization_layer",
+        name="stage12_recursive_runtime_level",
         tests=[
-            "tests/stage11",
+            "tests/stage12",
         ],
     ),
 ]
