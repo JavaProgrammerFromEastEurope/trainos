@@ -20,17 +20,13 @@ class EventBus:
         if payload is None and hasattr(event_or_type, "event_type"):
             self._queue.append(event_or_type)
             return
-
-
         self._queue.append(Event(event_or_type, payload))
 
     def update(self) -> None:
         queue = self._queue
         self._queue = deque()
-
         while queue:
             event = queue.popleft()
-
             for handler in list(self._subscribers.get(event.event_type, [])):
                 try:
                     # ALWAYS pass Event object
