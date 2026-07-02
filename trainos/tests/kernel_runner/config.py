@@ -118,9 +118,18 @@ STAGES: list[StageConfig] = [
     #         "tests/stage12",
     #     ],
     # ),
-    #
-    # Stage 14
-    #
+    # #
+    # # Stage 13
+    # #
+    # StageConfig(
+    #     name="stage13_some_level",
+    #     tests=[
+    #         "tests/stage13",
+    #     ],
+    # ),
+    # #
+    # # Stage 14
+    # #
     # StageConfig(
     #     name="stage14_coverage_level",
     #     tests=[
@@ -136,13 +145,40 @@ STAGES: list[StageConfig] = [
     #         "tests/stage15",
     #     ],
     # ),
+    # #
+    # # Stage 16
+    # #
+    # StageConfig(
+    #     name="stage16_Principles_level",
+    #     tests=[
+    #         "tests/stage16",
+    #     ],
+    # ),
+    # #
+    # # Stage 17
+    # #
+    # StageConfig(
+    #     name="stage17_constitutional_level",
+    #     tests=[
+    #         "tests/stage17",
+    #     ],
+    # ),
+    # #
+    # # Stage 18
+    # #
+    # StageConfig(
+    #     name="stage18_constitutional_audit_level",
+    #     tests=[
+    #         "tests/stage18",
+    #     ],
+    # ),
     #
-    # Stage 16
+    # Stage 19
     #
     StageConfig(
-        name="stage16_Principles_level",
+        name="stage19_institutional_level",
         tests=[
-            "tests/stage16",
+            "tests/stage18",
         ],
     ),
 ]
