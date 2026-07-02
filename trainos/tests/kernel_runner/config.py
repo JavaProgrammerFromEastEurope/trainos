@@ -178,7 +178,7 @@ STAGES: list[StageConfig] = [
     StageConfig(
         name="stage19_institutional_level",
         tests=[
-            "tests/stage18",
+            "tests/stage19",
         ],
     ),
 ]
