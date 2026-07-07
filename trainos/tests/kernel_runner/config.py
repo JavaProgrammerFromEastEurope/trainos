@@ -208,13 +208,22 @@ STAGES: list[StageConfig] = [
     #         "tests/stage22",
     #     ],
     # ),
+    # #
+    # # Stage 23
+    # #
+    # StageConfig(
+    #     name="stage23_production_job_level",
+    #     tests=[
+    #         "tests/stage23",
+    #     ],
+    # ),
     #
-    # Stage 23
+    # Stage 24
     #
     StageConfig(
-        name="stage23_production_job_level",
+        name="stage24_logistics_level",
         tests=[
-            "tests/stage23",
+            "tests/stage24",
         ],
     ),
 ]
