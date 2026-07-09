@@ -217,13 +217,31 @@ STAGES: list[StageConfig] = [
     #         "tests/stage23",
     #     ],
     # ),
-    #
-    # Stage 24
-    #
-    StageConfig(
-        name="stage24_logistics_level",
-        tests=[
-            "tests/stage24",
-        ],
-    ),
+    # #
+    # # Stage 24
+    # #
+    # StageConfig(
+    #     name="stage24_logistics_level",
+    #     tests=[
+    #         "tests/stage24",
+    #     ],
+    # ),
+    # #
+    # # Stage 25
+    # #
+    # StageConfig(
+    #     name="stage25_consumption_snapshot_level",
+    #     tests=[
+    #         "tests/stage25",
+    #     ],
+    # ),
+    # #
+    # # Stage 26
+    # #
+    # StageConfig(
+    #     name="stage26_population_definition_level",
+    #     tests=[
+    #         "tests/stage26",
+    #     ],
+    # ),
 ]
