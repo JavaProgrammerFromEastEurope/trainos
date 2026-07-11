@@ -244,4 +244,13 @@ STAGES: list[StageConfig] = [
     #         "tests/stage26",
     #     ],
     # ),
+    #
+    # Stage 27
+    #
+    StageConfig(
+        name="stage27_healthcare_level",
+        tests=[
+            "tests/stage27",
+        ],
+    ),
 ]
