@@ -289,13 +289,22 @@ STAGES: list[StageConfig] = [
     #         "tests/stage31",
     #     ],
     # ),
+    # #
+    # # Stage 32
+    # #
+    # StageConfig(
+    #     name="stage32_integration_level",
+    #     tests=[
+    #         "tests/stage32",
+    #     ],
+    # ),
     #
-    # Stage 32
+    # Stage 33
     #
     StageConfig(
-        name="stage32_integration_level",
+        name="stage33_persistence_level",
         tests=[
-            "tests/stage32",
+            "tests/stage33",
         ],
     ),
 ]
