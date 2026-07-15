@@ -325,13 +325,22 @@ STAGES: list[StageConfig] = [
     #         "tests/stage35",
     #     ],
     # ),
+    # #
+    # # Stage 36
+    # #
+    # StageConfig(
+    #     name="stage36_event_bus_layer",
+    #     tests=[
+    #         "tests/stage36",
+    #     ],
+    # ),
     #
     # Stage 36
     #
     StageConfig(
-        name="stage36_event_bus_layer",
+        name="stage37_workflow_layer",
         tests=[
-            "tests/stage36",
+            "tests/stage37",
         ],
     ),
 ]
