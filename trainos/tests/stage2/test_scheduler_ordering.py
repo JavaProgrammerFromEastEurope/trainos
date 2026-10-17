@@ -1,6 +1,6 @@
 # tests/stage2/test_scheduler_ordering.py
 
-from trainos.kernel.scheduler.scheduler_service import SchedulerService
+from kernel.scheduler.scheduler_service import SchedulerService
 
 
 def test_scheduler_ordering():

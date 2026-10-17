@@ -1,7 +1,7 @@
 # kernel/logging/log_formatter.py
 
 from __future__ import annotations
-from trainos.kernel.logging.log_record import LogRecord
+from kernel.logging.log_record import LogRecord
 
 
 class LogFormatter:

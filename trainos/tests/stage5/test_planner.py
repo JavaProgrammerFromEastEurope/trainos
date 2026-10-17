@@ -1,5 +1,5 @@
-from trainos.kernel.ai.decision.decision import Decision
-from trainos.kernel.ai.planning.planner import Planner
+from kernel.ai.decision.decision import Decision
+from kernel.ai.planning.planner import Planner
 
 
 def test_planner():

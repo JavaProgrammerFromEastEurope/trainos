@@ -1,5 +1,5 @@
 from typing import Protocol
-from trainos.kernel.events.event import Event
+from kernel.events.event import Event
 
 
 class EventHandler(Protocol):

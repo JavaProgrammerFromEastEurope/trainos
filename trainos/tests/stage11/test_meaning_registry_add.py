@@ -1,6 +1,6 @@
-from trainos.kernel.metacivilization.meaning.meaning import Meaning
-from trainos.kernel.metacivilization.meaning.meaning_type import MeaningType
-from trainos.kernel.metacivilization.meaning.meaning_registry import MeaningRegistry
+from kernel.metacivilization.meaning.meaning import Meaning
+from kernel.metacivilization.meaning.meaning_type import MeaningType
+from kernel.metacivilization.meaning.meaning_registry import MeaningRegistry
 
 
 def test_meaning_registry_add():

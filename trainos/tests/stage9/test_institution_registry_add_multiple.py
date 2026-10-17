@@ -1,6 +1,6 @@
-from trainos.kernel.communication.governance.institution.institution import Institution
-from trainos.kernel.communication.governance.institution.institution_registry import InstitutionRegistry
-from trainos.kernel.communication.governance.institution.institution_type import InstitutionType
+from kernel.communication.governance.institution.institution import Institution
+from kernel.communication.governance.institution.institution_registry import InstitutionRegistry
+from kernel.communication.governance.institution.institution_type import InstitutionType
 
 
 def test_institution_registry_add_multiple():

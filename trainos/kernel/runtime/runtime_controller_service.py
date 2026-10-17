@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from trainos.kernel.lifecycle.kernel_service import (
+from kernel.lifecycle.kernel_service import (
     KernelService,
     ServiceState,
 )
-from trainos.kernel.runtime.runtime_state import RuntimeState
+from kernel.runtime.runtime_state import RuntimeState
 
 
 class RuntimeControllerService(KernelService):

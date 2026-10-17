@@ -1,8 +1,8 @@
-from trainos.kernel.intelligence.hypothesis.hypothesis import Hypothesis
-from trainos.kernel.intelligence.hypothesis.hypothesis_registry import (
+from kernel.intelligence.hypothesis.hypothesis import Hypothesis
+from kernel.intelligence.hypothesis.hypothesis_registry import (
     HypothesisRegistry,
 )
-from trainos.kernel.intelligence.hypothesis.hypothesis_status import HypothesisStatus
+from kernel.intelligence.hypothesis.hypothesis_status import HypothesisStatus
 
 
 def test_hypothesis_registry_register():

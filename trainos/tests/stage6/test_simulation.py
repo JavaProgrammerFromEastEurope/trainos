@@ -1,4 +1,4 @@
-from trainos.kernel.world.simulation.simulation_engine import SimulationEngine
+from kernel.world.simulation.simulation_engine import SimulationEngine
 
 
 def test_simulation():

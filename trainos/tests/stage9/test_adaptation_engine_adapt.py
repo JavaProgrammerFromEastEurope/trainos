@@ -1,5 +1,5 @@
-from trainos.kernel.communication.resource_ecology.evolution.adaptation_engine import AdaptationEngine
-from trainos.kernel.communication.resource_ecology.evolution.adaptation_plan import AdaptationPlan
+from kernel.communication.resource_ecology.evolution.adaptation_engine import AdaptationEngine
+from kernel.communication.resource_ecology.evolution.adaptation_plan import AdaptationPlan
 
 def test_adaptation_engine_adapt():
 

@@ -3,7 +3,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from time import perf_counter
-from trainos.kernel.lifecycle.kernel_service import KernelService
+from kernel.lifecycle.kernel_service import KernelService
 
 
 @dataclass(slots=True)

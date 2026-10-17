@@ -1,5 +1,5 @@
-from trainos.kernel.evolution.memetics.ideology.cluster_registry import ClusterRegistry
-from trainos.kernel.evolution.memetics.ideology.ideological_cluster import IdeologicalCluster
+from kernel.evolution.memetics.ideology.cluster_registry import ClusterRegistry
+from kernel.evolution.memetics.ideology.ideological_cluster import IdeologicalCluster
 
 
 def test_cluster_registry_register():

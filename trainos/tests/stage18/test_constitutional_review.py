@@ -1,5 +1,5 @@
-from trainos.kernel.constitution.amendment.review.constitutional_review import ConstitutionalReview
-from trainos.kernel.constitution.amendment.review.review_result import ReviewResult
+from kernel.constitution.amendment.review.constitutional_review import ConstitutionalReview
+from kernel.constitution.amendment.review.review_result import ReviewResult
 
 
 def test_constitutional_review():

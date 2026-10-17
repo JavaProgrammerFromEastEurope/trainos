@@ -1,4 +1,4 @@
-from trainos.kernel.learning.learning_engine import LearningEngine
+from kernel.learning.learning_engine import LearningEngine
 
 
 def test_learning_core():

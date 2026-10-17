@@ -1,6 +1,6 @@
-from trainos.kernel.civilization.myth.myth import Myth
-from trainos.kernel.civilization.myth.myth_registry import MythRegistry
-from trainos.kernel.civilization.myth.myth_type import MythType
+from kernel.civilization.myth.myth import Myth
+from kernel.civilization.myth.myth_registry import MythRegistry
+from kernel.civilization.myth.myth_type import MythType
 
 
 def test_myth_registry_add():

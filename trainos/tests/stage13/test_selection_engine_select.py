@@ -1,5 +1,5 @@
-from trainos.kernel.evolution.memetics.selection.meme_fitness import MemeFitness
-from trainos.kernel.evolution.memetics.selection.selection_engine import SelectionEngine
+from kernel.evolution.memetics.selection.meme_fitness import MemeFitness
+from kernel.evolution.memetics.selection.selection_engine import SelectionEngine
 
 
 def test_selection_engine_select():

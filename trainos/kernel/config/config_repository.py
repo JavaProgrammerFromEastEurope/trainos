@@ -1,7 +1,7 @@
 # kernel/config/config_repository.py
 
 from __future__ import annotations
-from trainos.kernel.config.config_schema import ConfigSchema
+from kernel.config.config_schema import ConfigSchema
 
 
 class ConfigRepository:

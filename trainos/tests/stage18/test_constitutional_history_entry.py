@@ -1,4 +1,4 @@
-from trainos.kernel.constitution.history.history_entry import ConstitutionalHistoryEntry
+from kernel.constitution.history.history_entry import ConstitutionalHistoryEntry
 
 
 def test_constitutional_history_entry():

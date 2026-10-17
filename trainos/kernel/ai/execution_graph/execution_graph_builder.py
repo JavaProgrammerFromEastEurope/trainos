@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from trainos.kernel.ai.planning.plan import Plan
+from kernel.ai.planning.plan import Plan
 from .execution_graph import ExecutionGraph
 from .execution_node import ExecutionNode
 

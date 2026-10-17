@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List
 
-from trainos.kernel.ai.decision.decision import Decision
+from kernel.ai.decision.decision import Decision
 from .plan import Plan
 from .plan_step import PlanStep
 

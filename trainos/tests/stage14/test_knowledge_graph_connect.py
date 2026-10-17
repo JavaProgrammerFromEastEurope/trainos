@@ -1,4 +1,4 @@
-from trainos.kernel.intelligence.knowledge.knowledge_graph import KnowledgeGraph
+from kernel.intelligence.knowledge.knowledge_graph import KnowledgeGraph
 
 
 def test_knowledge_graph_connect():

@@ -1,5 +1,5 @@
-from trainos.kernel.communication.memory.knowledge_graph import KnowledgeGraph
-from trainos.kernel.communication.memory.knowledge_node import KnowledgeNode
+from kernel.communication.memory.knowledge_graph import KnowledgeGraph
+from kernel.communication.memory.knowledge_node import KnowledgeNode
 
 
 def test_knowledge_graph_add_multiple():

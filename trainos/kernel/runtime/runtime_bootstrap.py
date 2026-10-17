@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from trainos.kernel.runtime.runtime_kernel import RuntimeKernel
+from kernel.runtime.runtime_kernel import RuntimeKernel
 
 
 def create_runtime_kernel() -> RuntimeKernel:

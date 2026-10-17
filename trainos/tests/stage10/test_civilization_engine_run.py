@@ -1,7 +1,7 @@
-from trainos.kernel.civilization.civilization.civilization_engine import (
+from kernel.civilization.civilization.civilization_engine import (
     CivilizationEngine,
 )
-from trainos.kernel.civilization.civilization.civilization_state import (
+from kernel.civilization.civilization.civilization_state import (
     CivilizationState,
 )
 

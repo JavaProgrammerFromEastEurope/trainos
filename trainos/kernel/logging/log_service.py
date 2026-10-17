@@ -1,10 +1,10 @@
 # kernel/logging/log_service.py
 
 from __future__ import annotations
-from trainos.kernel.lifecycle.kernel_service import KernelService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
-from trainos.kernel.logging.log_level import LogLevel
-from trainos.kernel.logging.logger import Logger
+from kernel.lifecycle.kernel_service import KernelService
+from kernel.lifecycle.kernel_service import ServiceState
+from kernel.logging.log_level import LogLevel
+from kernel.logging.logger import Logger
 
 
 class LogService(KernelService):

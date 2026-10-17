@@ -3,7 +3,7 @@
 from __future__ import annotations
 from abc import ABC
 from abc import abstractmethod
-from trainos.kernel.scheduler.task import Task
+from kernel.scheduler.task import Task
 
 
 class TaskExecutor(ABC):

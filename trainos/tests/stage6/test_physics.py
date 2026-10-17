@@ -1,8 +1,8 @@
-from trainos.kernel.world.physics.physics_service import (
+from kernel.world.physics.physics_service import (
     PhysicsService,
 )
 
-from trainos.kernel.world.physics.gravity import (
+from kernel.world.physics.gravity import (
     Gravity,
 )
 

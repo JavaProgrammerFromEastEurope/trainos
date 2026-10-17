@@ -1,7 +1,7 @@
-from trainos.kernel.metacivilization.interaction.interaction_matrix import (
+from kernel.metacivilization.interaction.interaction_matrix import (
     InteractionMatrix,
 )
-from trainos.kernel.metacivilization.interaction.system_link import SystemLink
+from kernel.metacivilization.interaction.system_link import SystemLink
 
 
 def test_interaction_matrix_add_link():

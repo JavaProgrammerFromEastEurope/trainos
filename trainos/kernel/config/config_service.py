@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from trainos.kernel.config.config_repository import ConfigRepository
-from trainos.kernel.lifecycle.kernel_service import KernelService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
+from kernel.config.config_repository import ConfigRepository
+from kernel.lifecycle.kernel_service import KernelService
+from kernel.lifecycle.kernel_service import ServiceState
 
 
 class ConfigService(KernelService):

@@ -1,4 +1,4 @@
-from trainos.kernel.evolution.memetics.ideology.ideology_engine import IdeologyEngine
+from kernel.evolution.memetics.ideology.ideology_engine import IdeologyEngine
 
 
 def test_ideology_engine_form_cluster():

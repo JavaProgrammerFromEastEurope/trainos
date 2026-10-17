@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from trainos.kernel.health.health_report import HealthReport
-from trainos.kernel.lifecycle.kernel_service import (
+from kernel.health.health_report import HealthReport
+from kernel.lifecycle.kernel_service import (
     KernelService,
     ServiceState,
 )

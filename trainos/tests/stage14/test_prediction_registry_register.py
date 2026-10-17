@@ -1,6 +1,6 @@
-from trainos.kernel.intelligence.prediction.prediction import Prediction
-from trainos.kernel.intelligence.prediction.prediction_horizon import PredictionHorizon
-from trainos.kernel.intelligence.prediction.prediction_registry import (
+from kernel.intelligence.prediction.prediction import Prediction
+from kernel.intelligence.prediction.prediction_horizon import PredictionHorizon
+from kernel.intelligence.prediction.prediction_registry import (
     PredictionRegistry,
 )
 

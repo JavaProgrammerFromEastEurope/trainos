@@ -1,4 +1,4 @@
-from trainos.kernel.command_bus.command_context import CommandContext
+from kernel.command_bus.command_context import CommandContext
 
 
 def test_context():

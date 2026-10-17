@@ -1,5 +1,5 @@
-from trainos.kernel.identity.principles.principle_engine import PrincipleEngine
-from trainos.kernel.identity.principles.civilization_principle import CivilizationPrinciple
+from kernel.identity.principles.principle_engine import PrincipleEngine
+from kernel.identity.principles.civilization_principle import CivilizationPrinciple
 
 
 def test_principle_engine():

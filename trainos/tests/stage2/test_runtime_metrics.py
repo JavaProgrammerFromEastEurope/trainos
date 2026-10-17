@@ -1,7 +1,7 @@
 # tests/stage2/test_runtime_metrics.py
 
-from trainos.kernel.runtime.runtime_metrics_service import RuntimeMetricsService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
+from kernel.runtime.runtime_metrics_service import RuntimeMetricsService
+from kernel.lifecycle.kernel_service import ServiceState
 
 
 def test_runtime_metrics():

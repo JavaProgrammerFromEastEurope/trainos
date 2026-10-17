@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from trainos.kernel.clock.clock_service import ClockService
-from trainos.kernel.health.health_monitor_service import HealthMonitorService
-from trainos.kernel.kernel import Kernel
-from trainos.kernel.runtime.runtime_controller_service import RuntimeControllerService
-from trainos.kernel.runtime.runtime_metrics_service import RuntimeMetricsService
-from trainos.kernel.runtime.runtime_snapshot import RuntimeSnapshot
-from trainos.kernel.scheduler.scheduler_service import SchedulerService
-from trainos.kernel.time.time_service import TimeService
+from kernel.clock.clock_service import ClockService
+from kernel.health.health_monitor_service import HealthMonitorService
+from kernel.kernel import Kernel
+from kernel.runtime.runtime_controller_service import RuntimeControllerService
+from kernel.runtime.runtime_metrics_service import RuntimeMetricsService
+from kernel.runtime.runtime_snapshot import RuntimeSnapshot
+from kernel.scheduler.scheduler_service import SchedulerService
+from kernel.time.time_service import TimeService
 
 
 class RuntimeKernel(Kernel):

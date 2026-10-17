@@ -1,12 +1,12 @@
-from trainos.kernel.behavior.multi_agent.agent_group import (
+from kernel.behavior.multi_agent.agent_group import (
     AgentGroup,
 )
 
-from trainos.kernel.behavior.multi_agent.agent_member import (
+from kernel.behavior.multi_agent.agent_member import (
     AgentMember,
 )
 
-from trainos.kernel.behavior.multi_agent.agent_role import (
+from kernel.behavior.multi_agent.agent_role import (
     AgentRole,
 )
 

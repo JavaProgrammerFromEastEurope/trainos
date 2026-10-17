@@ -1,4 +1,4 @@
-from trainos.kernel.learning.curriculum.curriculum_engine import (
+from kernel.learning.curriculum.curriculum_engine import (
     CurriculumEngine,
 )
 

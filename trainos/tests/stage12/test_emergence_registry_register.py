@@ -1,5 +1,5 @@
-from trainos.kernel.metacivilization.emergence.emergence_registry import EmergenceRegistry
-from trainos.kernel.metacivilization.emergence.emergence_pattern import EmergencePattern
+from kernel.metacivilization.emergence.emergence_registry import EmergenceRegistry
+from kernel.metacivilization.emergence.emergence_pattern import EmergencePattern
 
 
 def test_emergence_registry_register():

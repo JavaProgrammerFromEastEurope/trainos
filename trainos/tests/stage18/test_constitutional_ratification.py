@@ -1,5 +1,5 @@
-from trainos.kernel.constitution.amendment.ratification.constitutional_ratification import ConstitutionalRatification
-from trainos.kernel.constitution.amendment.ratification.ratification_result import RatificationResult
+from kernel.constitution.amendment.ratification.constitutional_ratification import ConstitutionalRatification
+from kernel.constitution.amendment.ratification.ratification_result import RatificationResult
 
 
 def test_constitutional_ratification():

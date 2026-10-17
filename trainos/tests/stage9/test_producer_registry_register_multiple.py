@@ -1,10 +1,10 @@
-from trainos.kernel.communication.resource_ecology.producers.hydroponics_producer import (
+from kernel.communication.resource_ecology.producers.hydroponics_producer import (
     HydroponicsProducer,
 )
-from trainos.kernel.communication.resource_ecology.producers.producer_registry import (
+from kernel.communication.resource_ecology.producers.producer_registry import (
     ProducerRegistry,
 )
-from trainos.kernel.communication.resource_ecology.producers.solar_generator import (
+from kernel.communication.resource_ecology.producers.solar_generator import (
     SolarGenerator,
 )
 

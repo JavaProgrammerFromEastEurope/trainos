@@ -1,6 +1,6 @@
-from trainos.kernel.metacivilization.meta_ethics.meta_ethics import MetaEthics
-from trainos.kernel.metacivilization.meta_ethics.meta_ethics_type import MetaEthicsType
-from trainos.kernel.metacivilization.meta_ethics.meta_ethics_registry import MetaEthicsRegistry
+from kernel.metacivilization.meta_ethics.meta_ethics import MetaEthics
+from kernel.metacivilization.meta_ethics.meta_ethics_type import MetaEthicsType
+from kernel.metacivilization.meta_ethics.meta_ethics_registry import MetaEthicsRegistry
 
 
 def test_meta_ethics_registry_add():

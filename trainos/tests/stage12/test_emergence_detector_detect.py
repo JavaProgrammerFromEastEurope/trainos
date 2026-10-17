@@ -1,4 +1,4 @@
-from trainos.kernel.metacivilization.emergence.emergence_detector import EmergenceDetector
+from kernel.metacivilization.emergence.emergence_detector import EmergenceDetector
 
 
 def test_emergence_detector_detect():

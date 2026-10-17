@@ -1,8 +1,8 @@
-from trainos.kernel.behavior.utility.utility_option import (
+from kernel.behavior.utility.utility_option import (
     UtilityOption,
 )
 
-from trainos.kernel.behavior.utility.utility_evaluator import (
+from kernel.behavior.utility.utility_evaluator import (
     UtilityEvaluator,
 )
 

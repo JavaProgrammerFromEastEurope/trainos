@@ -1,5 +1,5 @@
-from trainos.kernel.civilization.value.value_engine import ValueEngine
-from trainos.kernel.civilization.value.value_type import ValueType
+from kernel.civilization.value.value_engine import ValueEngine
+from kernel.civilization.value.value_type import ValueType
 
 
 def test_value_engine_determine():

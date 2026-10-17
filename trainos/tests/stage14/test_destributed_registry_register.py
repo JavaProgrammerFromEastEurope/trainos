@@ -1,7 +1,7 @@
-from trainos.kernel.intelligence.distributed.distributed_registry import (
+from kernel.intelligence.distributed.distributed_registry import (
     DistributedRegistry,
 )
-from trainos.kernel.intelligence.distributed.reasoning_node import ReasoningNode
+from kernel.intelligence.distributed.reasoning_node import ReasoningNode
 
 
 def test_distributed_registry_register():

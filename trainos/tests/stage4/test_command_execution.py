@@ -1,8 +1,8 @@
-from trainos.kernel.command_bus.command import Command
-from trainos.kernel.command_bus.command_handler import CommandHandler
-from trainos.kernel.command_bus.command_service import CommandService
-from trainos.kernel.command_bus.command_context import CommandContext
-from trainos.kernel.command_bus.command_result import CommandResult
+from kernel.command_bus.command import Command
+from kernel.command_bus.command_handler import CommandHandler
+from kernel.command_bus.command_service import CommandService
+from kernel.command_bus.command_context import CommandContext
+from kernel.command_bus.command_result import CommandResult
 
 
 class DummyCommand(Command):

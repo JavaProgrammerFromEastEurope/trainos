@@ -5,7 +5,7 @@ from __future__ import annotations
 from heapq import heappush, heappop
 from typing import Any
 
-from trainos.kernel.scheduler.priority import ScheduledTask
+from kernel.scheduler.priority import ScheduledTask
 
 
 class TaskQueue:

@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 from typing import Dict, Optional, List
-from trainos.kernel.lifecycle.kernel_service import KernelService, ServiceState
-from trainos.kernel.events.event_bus import EventBus
-from trainos.kernel.logging.logger import Logger
-from trainos.kernel.clock.clock_service import ClockService
-from trainos.kernel.time.time_service import TimeService
+from kernel.lifecycle.kernel_service import KernelService, ServiceState
+from kernel.events.event_bus import EventBus
+from kernel.logging.logger import Logger
+from kernel.clock.clock_service import ClockService
+from kernel.time.time_service import TimeService
 
 
 class Kernel:

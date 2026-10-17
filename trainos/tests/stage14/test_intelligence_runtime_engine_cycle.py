@@ -1,4 +1,4 @@
-from trainos.kernel.intelligence.runtime.intelligence_runtime_engine import (
+from kernel.intelligence.runtime.intelligence_runtime_engine import (
     IntelligenceRuntimeEngine,
 )
 

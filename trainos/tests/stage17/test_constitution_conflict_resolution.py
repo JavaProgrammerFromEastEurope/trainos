@@ -1,5 +1,5 @@
-from trainos.kernel.constitution.conflict.constitutional_conflict import ConstitutionalConflict
-from trainos.kernel.constitution.conflict.conflict_engine import ConstitutionalConflictEngine
+from kernel.constitution.conflict.constitutional_conflict import ConstitutionalConflict
+from kernel.constitution.conflict.conflict_engine import ConstitutionalConflictEngine
 
 
 def test_constitution_conflict_resolution():

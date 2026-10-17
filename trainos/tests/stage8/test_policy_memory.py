@@ -1,5 +1,5 @@
-from trainos.kernel.learning.policy_memory.policy_history import PolicyHistory
-from trainos.kernel.learning.policy_memory.policy_version import PolicyVersion
+from kernel.learning.policy_memory.policy_history import PolicyHistory
+from kernel.learning.policy_memory.policy_version import PolicyVersion
 
 
 def test_policy_memory():

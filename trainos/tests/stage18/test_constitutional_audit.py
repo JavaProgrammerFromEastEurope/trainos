@@ -1,4 +1,4 @@
-from trainos.kernel.constitution.audit.audit_entry import ConstitutionalAuditEntry
+from kernel.constitution.audit.audit_entry import ConstitutionalAuditEntry
 
 
 def test_constitutional_audit():

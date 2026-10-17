@@ -1,6 +1,6 @@
-from trainos.kernel.command_bus.command_history import CommandHistory
-from trainos.kernel.command_bus.command_record import CommandRecord
-from trainos.kernel.command_bus.debug.command_inspector import CommandInspector
+from kernel.command_bus.command_history import CommandHistory
+from kernel.command_bus.command_record import CommandRecord
+from kernel.command_bus.debug.command_inspector import CommandInspector
 
 
 def test_inspector():

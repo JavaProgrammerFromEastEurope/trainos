@@ -1,6 +1,6 @@
-from trainos.kernel.metacivilization.destiny.destiny import Destiny
-from trainos.kernel.metacivilization.destiny.destiny_type import DestinyType
-from trainos.kernel.metacivilization.destiny.destiny_registry import DestinyRegistry
+from kernel.metacivilization.destiny.destiny import Destiny
+from kernel.metacivilization.destiny.destiny_type import DestinyType
+from kernel.metacivilization.destiny.destiny_registry import DestinyRegistry
 
 
 def test_destiny_registry_add():

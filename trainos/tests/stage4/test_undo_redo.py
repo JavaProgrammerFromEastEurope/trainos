@@ -1,5 +1,5 @@
-from trainos.kernel.command_bus.command_stack import CommandStack
-from trainos.kernel.command_bus.undoable_command import UndoableCommand
+from kernel.command_bus.command_stack import CommandStack
+from kernel.command_bus.undoable_command import UndoableCommand
 
 
 class Fake(UndoableCommand):

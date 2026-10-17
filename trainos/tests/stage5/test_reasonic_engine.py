@@ -1,12 +1,12 @@
-from trainos.kernel.ai.reasoning.reasoning_context import (
+from kernel.ai.reasoning.reasoning_context import (
     ReasoningContext,
 )
 
-from trainos.kernel.ai.reasoning.reasoning_engine import (
+from kernel.ai.reasoning.reasoning_engine import (
     ReasoningEngine,
 )
 
-from trainos.kernel.ai.reasoning.rule import Rule
+from kernel.ai.reasoning.rule import Rule
 
 
 def test_reasoning_engine():

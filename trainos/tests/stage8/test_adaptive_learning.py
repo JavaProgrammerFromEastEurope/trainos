@@ -1,4 +1,4 @@
-from trainos.kernel.learning.adaptive.adaptive_engine import (
+from kernel.learning.adaptive.adaptive_engine import (
     AdaptiveEngine,
 )
 

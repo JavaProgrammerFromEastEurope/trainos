@@ -1,5 +1,5 @@
-from trainos.kernel.ai.goals.goal import Goal
-from trainos.kernel.ai.goals.goal_manager import GoalManager
+from kernel.ai.goals.goal import Goal
+from kernel.ai.goals.goal_manager import GoalManager
 
 
 def test_goal_system():

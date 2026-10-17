@@ -1,4 +1,4 @@
-from trainos.kernel.learning.reinforcement.reinforcement_engine import (
+from kernel.learning.reinforcement.reinforcement_engine import (
     ReinforcementEngine,
 )
 

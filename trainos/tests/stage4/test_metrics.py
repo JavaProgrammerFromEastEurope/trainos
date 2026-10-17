@@ -1,4 +1,4 @@
-from trainos.kernel.command_bus.command_metrics import CommandMetrics
+from kernel.command_bus.command_metrics import CommandMetrics
 
 
 def test_metrics():

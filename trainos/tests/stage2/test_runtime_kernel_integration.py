@@ -1,6 +1,6 @@
 # tests/stage2/test_runtime_kernel_integration.py
 
-from trainos.kernel.runtime.runtime_bootstrap import create_runtime_kernel
+from kernel.runtime.runtime_bootstrap import create_runtime_kernel
 
 
 def test_runtime_kernel_integration():

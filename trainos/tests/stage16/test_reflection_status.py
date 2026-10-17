@@ -1,4 +1,4 @@
-from trainos.kernel.identity.principles.reflection.reflection_status import (
+from kernel.identity.principles.reflection.reflection_status import (
     ReflectionStatus,
 )
 

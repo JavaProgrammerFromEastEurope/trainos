@@ -1,9 +1,9 @@
-from trainos.kernel.communication.infrastructure.wagon.wagon import Wagon
-from trainos.kernel.communication.infrastructure.wagon.wagon_registry import (
+from kernel.communication.infrastructure.wagon.wagon import Wagon
+from kernel.communication.infrastructure.wagon.wagon_registry import (
     WagonRegistry,
 )
-from trainos.kernel.communication.infrastructure.wagon.wagon_status import WagonStatus
-from trainos.kernel.communication.infrastructure.wagon.wagon_type import WagonType
+from kernel.communication.infrastructure.wagon.wagon_status import WagonStatus
+from kernel.communication.infrastructure.wagon.wagon_type import WagonType
 
 
 def test_wagon_registry_add_multiple():

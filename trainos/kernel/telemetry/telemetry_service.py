@@ -4,10 +4,10 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import DefaultDict
 
-from trainos.kernel.lifecycle.kernel_service import KernelService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
-from trainos.kernel.telemetry.metric_record import MetricRecord
-from trainos.kernel.telemetry.metrics_snapshot import MetricsSnapshot
+from kernel.lifecycle.kernel_service import KernelService
+from kernel.lifecycle.kernel_service import ServiceState
+from kernel.telemetry.metric_record import MetricRecord
+from kernel.telemetry.metrics_snapshot import MetricsSnapshot
 
 
 class TelemetryService(KernelService):

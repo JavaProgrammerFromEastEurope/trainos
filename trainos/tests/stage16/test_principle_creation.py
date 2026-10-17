@@ -1,7 +1,7 @@
-from trainos.kernel.identity.principles.civilization_principle import (
+from kernel.identity.principles.civilization_principle import (
     CivilizationPrinciple,
 )
-from trainos.kernel.identity.principles.principle_type import PrincipleType
+from kernel.identity.principles.principle_type import PrincipleType
 
 
 def test_principle_creation():

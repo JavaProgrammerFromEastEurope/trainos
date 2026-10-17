@@ -1,7 +1,7 @@
 from decimal import Decimal
 
-from trainos.kernel.production.inputs.production_input_check 	import ProductionInputCheck
-from trainos.kernel.production.inputs.production_input_engine 	import ProductionInputEngine
+from kernel.production.inputs.production_input_check 	import ProductionInputCheck
+from kernel.production.inputs.production_input_engine 	import ProductionInputEngine
 
 
 def test_production_input_engine():

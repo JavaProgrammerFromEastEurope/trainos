@@ -1,6 +1,6 @@
-from trainos.kernel.civilization.tradition.tradition import Tradition
-from trainos.kernel.civilization.tradition.tradition_registry import TraditionRegistry
-from trainos.kernel.civilization.tradition.tradition_type import TraditionType
+from kernel.civilization.tradition.tradition import Tradition
+from kernel.civilization.tradition.tradition_registry import TraditionRegistry
+from kernel.civilization.tradition.tradition_type import TraditionType
 
 
 def test_tradition_registry_add():

@@ -1,6 +1,6 @@
-from trainos.kernel.command_bus.query import Query
-from trainos.kernel.command_bus.query_handler import QueryHandler
-from trainos.kernel.command_bus.query_bus import QueryBus
+from kernel.command_bus.query import Query
+from kernel.command_bus.query_handler import QueryHandler
+from kernel.command_bus.query_bus import QueryBus
 
 
 class Q(Query):

@@ -1,5 +1,5 @@
-from trainos.kernel.civilization.ethics.ethics_engine import EthicsEngine
-from trainos.kernel.civilization.ethics.ethics_type import EthicsType
+from kernel.civilization.ethics.ethics_engine import EthicsEngine
+from kernel.civilization.ethics.ethics_type import EthicsType
 
 
 def test_ethics_engine_evaluate():

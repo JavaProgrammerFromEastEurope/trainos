@@ -1,7 +1,7 @@
 from collections import defaultdict, deque
 from typing import Callable, Any, Union
 # CASE 2: (type, payload)
-from trainos.kernel.events.event import Event
+from kernel.events.event import Event
 
 class EventBus:
     def __init__(self) -> None:

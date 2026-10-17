@@ -1,5 +1,5 @@
-from trainos.kernel.evolution.memetics.propagation.propagation_engine import PropagationEngine
-from trainos.kernel.evolution.memetics.propagation.propagation_event import PropagationEvent
+from kernel.evolution.memetics.propagation.propagation_engine import PropagationEngine
+from kernel.evolution.memetics.propagation.propagation_event import PropagationEvent
 
 
 def test_propagation_engine_propagate():

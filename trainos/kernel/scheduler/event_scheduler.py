@@ -1,9 +1,9 @@
 # kernel/scheduler/event_scheduler.py
 from __future__ import annotations
 
-from trainos.kernel.events.event_bus 			import EventBus
-from trainos.kernel.scheduler.task_queue 	import TaskQueue
-from trainos.kernel.scheduler.priority 		import ScheduledTask
+from kernel.events.event_bus 			import EventBus
+from kernel.scheduler.task_queue 	import TaskQueue
+from kernel.scheduler.priority 		import ScheduledTask
 
 
 class EventScheduler:

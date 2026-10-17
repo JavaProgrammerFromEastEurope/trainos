@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from trainos.kernel.state.state_service import StateService
+    from kernel.state.state_service import StateService
 
 
 class StateController:

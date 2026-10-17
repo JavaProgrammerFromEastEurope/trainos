@@ -1,6 +1,6 @@
-from trainos.kernel.metacivilization.evolution_constraints.constraint_engine import ConstraintEngine
-from trainos.kernel.metacivilization.evolution_constraints.constraint import Constraint
-from trainos.kernel.metacivilization.evolution_constraints.constraint_type import ConstraintType
+from kernel.metacivilization.evolution_constraints.constraint_engine import ConstraintEngine
+from kernel.metacivilization.evolution_constraints.constraint import Constraint
+from kernel.metacivilization.evolution_constraints.constraint_type import ConstraintType
 
 
 def test_constraint_engine_validate():

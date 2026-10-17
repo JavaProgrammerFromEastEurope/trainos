@@ -1,6 +1,6 @@
-from trainos.kernel.behavior.goap.goap_goal import GOAPGoal
-from trainos.kernel.behavior.goap.goap_plan import GOAPPlan
-from trainos.kernel.behavior.goap.goap_planner import GOAPPlanner
+from kernel.behavior.goap.goap_goal import GOAPGoal
+from kernel.behavior.goap.goap_plan import GOAPPlan
+from kernel.behavior.goap.goap_planner import GOAPPlanner
 
 
 def test_goap():

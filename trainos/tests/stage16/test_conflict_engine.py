@@ -1,6 +1,6 @@
-from trainos.kernel.identity.principles.conflict.conflict_engine import PrincipleConflictEngine
-from trainos.kernel.identity.principles.conflict.principle_conflict import PrincipleConflict
-from trainos.kernel.identity.principles.civilization_principle import CivilizationPrinciple
+from kernel.identity.principles.conflict.conflict_engine import PrincipleConflictEngine
+from kernel.identity.principles.conflict.principle_conflict import PrincipleConflict
+from kernel.identity.principles.civilization_principle import CivilizationPrinciple
 
 
 def test_conflict_engine():

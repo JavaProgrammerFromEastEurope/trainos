@@ -1,5 +1,5 @@
-from trainos.kernel.constitution.amendment.amendment_proposal import AmendmentProposal
-from trainos.kernel.constitution.amendment.amendment_type import AmendmentType
+from kernel.constitution.amendment.amendment_proposal import AmendmentProposal
+from kernel.constitution.amendment.amendment_type import AmendmentType
 
 
 def test_amendment_proposal_creation():

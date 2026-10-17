@@ -1,12 +1,12 @@
-from trainos.kernel.behavior.htn.htn_task import (
+from kernel.behavior.htn.htn_task import (
     HTNTask,
 )
 
-from trainos.kernel.behavior.htn.htn_plan import (
+from kernel.behavior.htn.htn_plan import (
     HTNPlan,
 )
 
-from trainos.kernel.behavior.htn.htn_planner import (
+from kernel.behavior.htn.htn_planner import (
     HTNPlanner,
 )
 

@@ -1,5 +1,5 @@
-from trainos.kernel.constitution.constitutional_rule import ConstitutionalRule
-from trainos.kernel.constitution.rule_type import RuleType
+from kernel.constitution.constitutional_rule import ConstitutionalRule
+from kernel.constitution.rule_type import RuleType
 
 
 def test_constitutional_rule_creation():

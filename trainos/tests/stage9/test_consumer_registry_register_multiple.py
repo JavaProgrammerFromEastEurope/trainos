@@ -1,10 +1,10 @@
-from trainos.kernel.communication.resource_ecology.consumers.consumer_registry import (
+from kernel.communication.resource_ecology.consumers.consumer_registry import (
     ConsumerRegistry,
 )
-from trainos.kernel.communication.resource_ecology.consumers.engine_consumer import (
+from kernel.communication.resource_ecology.consumers.engine_consumer import (
     EngineConsumer,
 )
-from trainos.kernel.communication.resource_ecology.consumers.population_consumer import (
+from kernel.communication.resource_ecology.consumers.population_consumer import (
     PopulationConsumer,
 )
 

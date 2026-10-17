@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from trainos.kernel.world.entities.entity import (
+from kernel.world.entities.entity import (
     Entity,
 )
 

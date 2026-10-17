@@ -1,8 +1,8 @@
-from trainos.kernel.ai.runtime.autonomous_runtime import (
+from kernel.ai.runtime.autonomous_runtime import (
     AutonomousRuntime,
 )
 
-from trainos.kernel.ai.runtime.agent_loop import (
+from kernel.ai.runtime.agent_loop import (
     AgentLoop,
 )
 

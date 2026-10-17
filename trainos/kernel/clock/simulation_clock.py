@@ -1,9 +1,9 @@
 # kernel/clock/simulation_clock.py
 
 from __future__ import annotations
-from trainos.kernel.clock.tick import Tick
-from trainos.kernel.lifecycle.kernel_service import KernelService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
+from kernel.clock.tick import Tick
+from kernel.lifecycle.kernel_service import KernelService
+from kernel.lifecycle.kernel_service import ServiceState
 
 
 class SimulationClock(KernelService):

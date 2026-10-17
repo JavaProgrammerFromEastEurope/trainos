@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from trainos.kernel.state.debug.state_inspection_node import (
+from kernel.state.debug.state_inspection_node import (
     StateInspectionNode,
 )
 

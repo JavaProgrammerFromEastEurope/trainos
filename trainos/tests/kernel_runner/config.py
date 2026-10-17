@@ -271,69 +271,69 @@ STAGES: list[StageConfig] = [
     #         "tests/stage29",
     #     ],
     # ),
-    # #
-    # # Stage 30
-    # #
-    # StageConfig(
-    #     name="stage30_governance_level",
-    #     tests=[
-    #         "tests/stage30",
-    #     ],
-    # ),
-    # #
-    # # Stage 31
-    # #
-    # StageConfig(
-    #     name="stage31_simulation_level",
-    #     tests=[
-    #         "tests/stage31",
-    #     ],
-    # ),
-    # #
-    # # Stage 32
-    # #
-    # StageConfig(
-    #     name="stage32_integration_level",
-    #     tests=[
-    #         "tests/stage32",
-    #     ],
-    # ),
-    # #
-    # # Stage 33
-    # #
-    # StageConfig(
-    #     name="stage33_persistence_level",
-    #     tests=[
-    #         "tests/stage33",
-    #     ],
-    # ),
-    # #
-    # # Stage 34
-    # #
-    # StageConfig(
-    #     name="stage34_configuration_layer",
-    #     tests=[
-    #         "tests/stage34",
-    #     ],
-    # ),
-    # #
-    # # Stage 35
-    # #
-    # StageConfig(
-    #     name="stage35_scheduling_layer",
-    #     tests=[
-    #         "tests/stage35",
-    #     ],
-    # ),
-    # #
-    # # Stage 36
-    # #
-    # StageConfig(
-    #     name="stage36_event_bus_layer",
-    #     tests=[
-    #         "tests/stage36",
-    #     ],
-    # ),
+    #
+    # Stage 30
+    #
+    StageConfig(
+        name="stage30_governance_level",
+        tests=[
+            "tests/stage30",
+        ],
+    ),
+    #
+    # Stage 31
+    #
+    StageConfig(
+        name="stage31_simulation_level",
+        tests=[
+            "tests/stage31",
+        ],
+    ),
+    #
+    # Stage 32
+    #
+    StageConfig(
+        name="stage32_integration_level",
+        tests=[
+            "tests/stage32",
+        ],
+    ),
+    #
+    # Stage 33
+    #
+    StageConfig(
+        name="stage33_persistence_level",
+        tests=[
+            "tests/stage33",
+        ],
+    ),
+    #
+    # Stage 34
+    #
+    StageConfig(
+        name="stage34_configuration_layer",
+        tests=[
+            "tests/stage34",
+        ],
+    ),
+    #
+    # Stage 35
+    #
+    StageConfig(
+        name="stage35_scheduling_layer",
+        tests=[
+            "tests/stage35",
+        ],
+    ),
+    #
+    # Stage 36
+    #
+    StageConfig(
+        name="stage36_event_bus_layer",
+        tests=[
+            "tests/stage36",
+        ],
+    ),
     #
     # Stage 36
     #

@@ -1,4 +1,4 @@
-from trainos.kernel.metacivilization.recursive_runtime.recursive_runtime_engine import RecursiveRuntimeEngine
+from kernel.metacivilization.recursive_runtime.recursive_runtime_engine import RecursiveRuntimeEngine
 
 
 def test_recursive_runtime_engine_tick_increases():

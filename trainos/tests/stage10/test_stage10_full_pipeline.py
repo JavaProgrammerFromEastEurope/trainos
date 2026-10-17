@@ -1,20 +1,20 @@
-from trainos.kernel.civilization.civilization.civilization_engine import CivilizationEngine
-from trainos.kernel.civilization.culture.cultural_memory import CulturalMemory
-from trainos.kernel.civilization.culture.cultural_record import CulturalRecord
-from trainos.kernel.civilization.ethics.ethics_engine import EthicsEngine
-from trainos.kernel.civilization.history.historical_record import HistoricalRecord
-from trainos.kernel.civilization.history.history_registry import HistoryRegistry
-from trainos.kernel.civilization.identity.identity import Identity
-from trainos.kernel.civilization.identity.identity_registry import IdentityRegistry
-from trainos.kernel.civilization.identity.identity_type import IdentityType
-from trainos.kernel.civilization.myth.myth import Myth
-from trainos.kernel.civilization.myth.myth_registry import MythRegistry
-from trainos.kernel.civilization.myth.myth_type import MythType
-from trainos.kernel.civilization.reputation.reputation_engine import ReputationEngine
-from trainos.kernel.civilization.tradition.tradition import Tradition
-from trainos.kernel.civilization.tradition.tradition_registry import TraditionRegistry
-from trainos.kernel.civilization.tradition.tradition_type import TraditionType
-from trainos.kernel.civilization.value.value_engine import ValueEngine
+from kernel.civilization.civilization.civilization_engine import CivilizationEngine
+from kernel.civilization.culture.cultural_memory import CulturalMemory
+from kernel.civilization.culture.cultural_record import CulturalRecord
+from kernel.civilization.ethics.ethics_engine import EthicsEngine
+from kernel.civilization.history.historical_record import HistoricalRecord
+from kernel.civilization.history.history_registry import HistoryRegistry
+from kernel.civilization.identity.identity import Identity
+from kernel.civilization.identity.identity_registry import IdentityRegistry
+from kernel.civilization.identity.identity_type import IdentityType
+from kernel.civilization.myth.myth import Myth
+from kernel.civilization.myth.myth_registry import MythRegistry
+from kernel.civilization.myth.myth_type import MythType
+from kernel.civilization.reputation.reputation_engine import ReputationEngine
+from kernel.civilization.tradition.tradition import Tradition
+from kernel.civilization.tradition.tradition_registry import TraditionRegistry
+from kernel.civilization.tradition.tradition_type import TraditionType
+from kernel.civilization.value.value_engine import ValueEngine
 
 
 def test_stage10_full_pipeline():

@@ -1,8 +1,8 @@
-from trainos.kernel.world.runtime.world_runtime import (
+from kernel.world.runtime.world_runtime import (
     WorldRuntime,
 )
 
-from trainos.kernel.world.runtime.world_state import (
+from kernel.world.runtime.world_state import (
     WorldState,
 )
 

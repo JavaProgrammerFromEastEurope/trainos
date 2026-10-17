@@ -1,7 +1,7 @@
-from trainos.kernel.constitution.evolution.constitutional_evolution import (
+from kernel.constitution.evolution.constitutional_evolution import (
     ConstitutionalEvolution,
 )
-from trainos.kernel.constitution.evolution.evolution_type import EvolutionType
+from kernel.constitution.evolution.evolution_type import EvolutionType
 
 
 def test_constitution_evolution():

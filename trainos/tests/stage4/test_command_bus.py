@@ -1,5 +1,5 @@
-from trainos.kernel.command_bus.command_bus import CommandBus
-from trainos.kernel.command_bus.command_service import CommandService
+from kernel.command_bus.command_bus import CommandBus
+from kernel.command_bus.command_service import CommandService
 
 
 def test_command_bus():

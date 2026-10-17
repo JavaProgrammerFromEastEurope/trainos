@@ -1,5 +1,5 @@
-from trainos.kernel.ai.decision.decision import Decision
-from trainos.kernel.ai.command_generation.command_generator import CommandGenerator
+from kernel.ai.decision.decision import Decision
+from kernel.ai.command_generation.command_generator import CommandGenerator
 
 
 def test_command_generation():

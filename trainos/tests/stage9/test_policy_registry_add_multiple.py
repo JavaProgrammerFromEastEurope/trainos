@@ -1,6 +1,6 @@
-from trainos.kernel.communication.governance.policy.policy import Policy
-from trainos.kernel.communication.governance.policy.policy_registry import PolicyRegistry
-from trainos.kernel.communication.governance.policy.policy_type import PolicyType
+from kernel.communication.governance.policy.policy import Policy
+from kernel.communication.governance.policy.policy_registry import PolicyRegistry
+from kernel.communication.governance.policy.policy_type import PolicyType
 
 
 def test_policy_registry_add_multiple():

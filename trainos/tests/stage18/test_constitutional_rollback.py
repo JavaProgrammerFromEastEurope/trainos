@@ -1,5 +1,5 @@
-from trainos.kernel.constitution.rollback.constitutional_rollback import ConstitutionalRollback
-from trainos.kernel.constitution.rollback.rollback_result import RollbackResult
+from kernel.constitution.rollback.constitutional_rollback import ConstitutionalRollback
+from kernel.constitution.rollback.rollback_result import RollbackResult
 
 
 def test_constitutional_rollback():

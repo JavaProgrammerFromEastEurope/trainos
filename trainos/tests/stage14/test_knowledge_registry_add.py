@@ -1,6 +1,6 @@
-from trainos.kernel.intelligence.knowledge.knowledge_node import KnowledgeNode
-from trainos.kernel.intelligence.knowledge.knowledge_registry import KnowledgeRegistry
-from trainos.kernel.intelligence.knowledge.knowledge_type import KnowledgeType
+from kernel.intelligence.knowledge.knowledge_node import KnowledgeNode
+from kernel.intelligence.knowledge.knowledge_registry import KnowledgeRegistry
+from kernel.intelligence.knowledge.knowledge_type import KnowledgeType
 
 
 def test_knowledge_registry_add():

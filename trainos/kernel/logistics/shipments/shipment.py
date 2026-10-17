@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from decimal import Decimal
 
-from trainos.kernel.logistics.shipments import shipment_status
+from kernel.logistics.shipments import shipment_status
 
 
 @dataclass(frozen=True, slots=True)

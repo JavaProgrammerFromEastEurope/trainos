@@ -1,4 +1,4 @@
-from trainos.kernel.evolution.culture.speciation.speciation_engine import SpeciationEngine
+from kernel.evolution.culture.speciation.speciation_engine import SpeciationEngine
 
 
 def test_speciation_engine_split():

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from typing import List
-from trainos.kernel.command_bus.command 	import Command
-from trainos.kernel.ai.decision.decision 	import Decision
+from kernel.command_bus.command 	import Command
+from kernel.ai.decision.decision 	import Decision
 
 
 class CommandGenerator:

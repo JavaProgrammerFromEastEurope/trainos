@@ -1,4 +1,4 @@
-from trainos.kernel.state.state_service import StateService
+from kernel.state.state_service import StateService
 
 
 def test_reactive_state_system():

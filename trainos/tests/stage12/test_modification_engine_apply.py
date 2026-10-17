@@ -1,5 +1,5 @@
-from trainos.kernel.metacivilization.self_modification.modification_engine import ModificationEngine
-from trainos.kernel.metacivilization.self_modification.modification_event import ModificationEvent
+from kernel.metacivilization.self_modification.modification_engine import ModificationEngine
+from kernel.metacivilization.self_modification.modification_event import ModificationEvent
 
 
 def test_modification_engine_apply():

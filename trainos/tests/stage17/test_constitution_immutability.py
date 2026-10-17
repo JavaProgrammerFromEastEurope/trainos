@@ -1,7 +1,7 @@
-from trainos.kernel.constitution.immutability.constitutional_immutability import (
+from kernel.constitution.immutability.constitutional_immutability import (
     ConstitutionalImmutability,
 )
-from trainos.kernel.constitution.immutability.immutability_type import ImmutabilityType
+from kernel.constitution.immutability.immutability_type import ImmutabilityType
 
 
 def test_constitution_immutability():

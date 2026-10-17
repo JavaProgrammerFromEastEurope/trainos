@@ -1,5 +1,5 @@
-from trainos.kernel.identity.principles.origin.principle_origin import PrincipleOrigin
-from trainos.kernel.identity.principles.origin.origin_type import OriginType
+from kernel.identity.principles.origin.principle_origin import PrincipleOrigin
+from kernel.identity.principles.origin.origin_type import OriginType
 
 
 def test_principle_origin():

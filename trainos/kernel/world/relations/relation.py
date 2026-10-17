@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from trainos.kernel.world.entities.entity_id import (
+from kernel.world.entities.entity_id import (
     EntityId,
 )
 from .relation_type import (

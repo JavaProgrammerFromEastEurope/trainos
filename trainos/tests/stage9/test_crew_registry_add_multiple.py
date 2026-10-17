@@ -1,7 +1,7 @@
-from trainos.kernel.communication.resource_ecology.population.crew_member import (
+from kernel.communication.resource_ecology.population.crew_member import (
     CrewMember,
 )
-from trainos.kernel.communication.resource_ecology.population.crew_registry import (
+from kernel.communication.resource_ecology.population.crew_registry import (
     CrewRegistry,
 )
 

@@ -1,4 +1,4 @@
-from trainos.kernel.learning.lifelong.lifelong_engine import LifelongEngine
+from kernel.learning.lifelong.lifelong_engine import LifelongEngine
 
 
 def test_lifelong_learning():

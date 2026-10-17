@@ -1,6 +1,6 @@
-from trainos.kernel.metacivilization.goals.goal import Goal
-from trainos.kernel.metacivilization.goals.goal_type import GoalType
-from trainos.kernel.metacivilization.goals.goal_registry import GoalRegistry
+from kernel.metacivilization.goals.goal import Goal
+from kernel.metacivilization.goals.goal_type import GoalType
+from kernel.metacivilization.goals.goal_registry import GoalRegistry
 
 
 def test_goal_registry_add():

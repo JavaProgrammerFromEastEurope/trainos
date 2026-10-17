@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from trainos.kernel.state.state_service import (
+from kernel.state.state_service import (
     StateService,
 )
 

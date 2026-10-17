@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from trainos.kernel.health.health_report 		import HealthReport
-from trainos.kernel.runtime.runtime_metrics import RuntimeMetrics
-from trainos.kernel.runtime.runtime_state 	import RuntimeState
+from kernel.health.health_report 		import HealthReport
+from kernel.runtime.runtime_metrics import RuntimeMetrics
+from kernel.runtime.runtime_state 	import RuntimeState
 
 
 @dataclass(frozen=True, slots=True)

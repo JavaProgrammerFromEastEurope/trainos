@@ -1,5 +1,5 @@
-from trainos.kernel.metacivilization.stability.stability_engine import StabilityEngine
-from trainos.kernel.metacivilization.stability.drift_event import DriftEvent
+from kernel.metacivilization.stability.stability_engine import StabilityEngine
+from kernel.metacivilization.stability.drift_event import DriftEvent
 
 
 def test_stability_engine_process():

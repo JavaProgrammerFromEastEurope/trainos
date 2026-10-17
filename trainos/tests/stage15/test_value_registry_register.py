@@ -1,7 +1,7 @@
-from trainos.kernel.strategy.value.value_assessment import ValueAssessment
-from trainos.kernel.strategy.value.value_dimension import ValueDimension
-from trainos.kernel.strategy.value.value_registry import ValueRegistry
-from trainos.kernel.strategy.value.value_score import ValueScore
+from kernel.strategy.value.value_assessment import ValueAssessment
+from kernel.strategy.value.value_dimension import ValueDimension
+from kernel.strategy.value.value_registry import ValueRegistry
+from kernel.strategy.value.value_score import ValueScore
 
 
 def test_value_registry_register():

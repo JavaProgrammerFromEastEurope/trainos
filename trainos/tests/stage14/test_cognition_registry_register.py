@@ -1,6 +1,6 @@
-from trainos.kernel.intelligence.cognition.cognition_registry import CognitionRegistry
-from trainos.kernel.intelligence.cognition.cognition_snapshot import CognitionSnapshot
-from trainos.kernel.intelligence.cognition.cognition_state import CognitionState
+from kernel.intelligence.cognition.cognition_registry import CognitionRegistry
+from kernel.intelligence.cognition.cognition_snapshot import CognitionSnapshot
+from kernel.intelligence.cognition.cognition_state import CognitionState
 
 
 def test_cognition_registry_register():

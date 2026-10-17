@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from trainos.kernel.scheduler.priority import Priority
+from kernel.scheduler.priority import Priority
 
 
 class InterruptController:

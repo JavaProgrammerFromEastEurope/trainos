@@ -1,8 +1,8 @@
-from trainos.kernel.world.traits.trait_container import (
+from kernel.world.traits.trait_container import (
     TraitContainer,
 )
 
-from trainos.kernel.world.traits.movable_trait import (
+from kernel.world.traits.movable_trait import (
     MovableTrait,
 )
 

@@ -1,5 +1,5 @@
-from trainos.kernel.command_bus.request import Request
-from trainos.kernel.command_bus.response import Response
+from kernel.command_bus.request import Request
+from kernel.command_bus.response import Response
 
 
 def test_request_response():

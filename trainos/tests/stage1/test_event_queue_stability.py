@@ -1,4 +1,4 @@
-from trainos.kernel.kernel import Kernel
+from kernel.kernel import Kernel
 
 
 def test_event_queue_does_not_crash_under_load():

@@ -1,4 +1,4 @@
-from trainos.kernel.learning.improvement.adaptation_engine import (
+from kernel.learning.improvement.adaptation_engine import (
     AdaptationEngine,
 )
 

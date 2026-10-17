@@ -1,4 +1,4 @@
-from trainos.kernel.evolution.cultural_runtime.cultural_runtime_engine import CulturalRuntimeEngine
+from kernel.evolution.cultural_runtime.cultural_runtime_engine import CulturalRuntimeEngine
 
 
 def test_cultural_runtime_engine_step():

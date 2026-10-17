@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Callable, Optional
 
-from trainos.kernel.lifecycle.kernel_service import KernelService
+from kernel.lifecycle.kernel_service import KernelService
 
 
 @dataclass

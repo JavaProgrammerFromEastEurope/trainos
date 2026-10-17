@@ -1,6 +1,6 @@
-from trainos.kernel.strategy.planning.plan_step import PlanStep
-from trainos.kernel.strategy.planning.planning_registry import PlanningRegistry
-from trainos.kernel.strategy.planning.strategic_plan import StrategicPlan
+from kernel.strategy.planning.plan_step import PlanStep
+from kernel.strategy.planning.planning_registry import PlanningRegistry
+from kernel.strategy.planning.strategic_plan import StrategicPlan
 
 
 def test_planning_registry_register():

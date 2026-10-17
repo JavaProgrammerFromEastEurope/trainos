@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import List
 
-from trainos.kernel.ai.decision.decision import Decision
+from kernel.ai.decision.decision import Decision
 from .command_generator import CommandGenerator
-from trainos.kernel.command_bus.command import Command
+from kernel.command_bus.command import Command
 
 
 class DecisionToCommandPipeline:

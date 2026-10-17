@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from trainos.kernel.state.serialization.state_serializer import (
+from kernel.state.serialization.state_serializer import (
     StateSerializer,
 )
 

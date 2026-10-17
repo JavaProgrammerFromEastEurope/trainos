@@ -1,8 +1,8 @@
 # tests/stage2/test_health_monitor.py
 
-from trainos.kernel.health.health_monitor_service import HealthMonitorService
-from trainos.kernel.lifecycle.kernel_service import KernelService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
+from kernel.health.health_monitor_service import HealthMonitorService
+from kernel.lifecycle.kernel_service import KernelService
+from kernel.lifecycle.kernel_service import ServiceState
 
 
 class DummyService(KernelService):

@@ -5,11 +5,11 @@ from __future__ import annotations
 import heapq
 from typing import Dict
 
-from trainos.kernel.lifecycle.kernel_service import KernelService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
-from trainos.kernel.scheduler.task import Task
-from trainos.kernel.scheduler.task import TaskState
-from trainos.kernel.scheduler.task_executor import TaskExecutor
+from kernel.lifecycle.kernel_service import KernelService
+from kernel.lifecycle.kernel_service import ServiceState
+from kernel.scheduler.task import Task
+from kernel.scheduler.task import TaskState
+from kernel.scheduler.task_executor import TaskExecutor
 
 
 class KernelScheduler(KernelService):

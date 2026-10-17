@@ -1,5 +1,5 @@
-from trainos.kernel.metacivilization.feedback.feedback_registry import FeedbackRegistry
-from trainos.kernel.metacivilization.feedback.feedback_loop import FeedbackLoop
+from kernel.metacivilization.feedback.feedback_registry import FeedbackRegistry
+from kernel.metacivilization.feedback.feedback_loop import FeedbackLoop
 
 
 def test_feedback_registry_add():

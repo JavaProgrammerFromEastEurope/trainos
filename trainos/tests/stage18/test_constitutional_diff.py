@@ -1,5 +1,5 @@
-from trainos.kernel.constitution.diff.constitutional_diff import ConstitutionalDiff
-from trainos.kernel.constitution.diff.diff_result import DiffResult
+from kernel.constitution.diff.constitutional_diff import ConstitutionalDiff
+from kernel.constitution.diff.diff_result import DiffResult
 
 
 def test_constitutional_diff():

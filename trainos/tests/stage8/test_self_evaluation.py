@@ -1,4 +1,4 @@
-from trainos.kernel.learning.self_evaluation.evaluation_engine import (
+from kernel.learning.self_evaluation.evaluation_engine import (
     EvaluationEngine,
 )
 

@@ -1,7 +1,7 @@
 # tests/stage2/test_time_service.py
 
-from trainos.kernel.time.time_service import TimeService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
+from kernel.time.time_service import TimeService
+from kernel.lifecycle.kernel_service import ServiceState
 
 
 def test_time_service():

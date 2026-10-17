@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from trainos.kernel.governance.authority import GovernanceAuthority
+from kernel.governance.authority import GovernanceAuthority
 from .institution_type import InstitutionType
 
 

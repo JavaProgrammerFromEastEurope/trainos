@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from trainos.kernel.state.state_history_record import (
+from kernel.state.state_history_record import (
     StateHistoryRecord,
 )
 

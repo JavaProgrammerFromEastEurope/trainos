@@ -1,5 +1,5 @@
-from trainos.kernel.learning.episodes.episode import Episode
-from trainos.kernel.learning.episodes.episode_step import EpisodeStep
+from kernel.learning.episodes.episode import Episode
+from kernel.learning.episodes.episode_step import EpisodeStep
 
 
 def test_episode_system():

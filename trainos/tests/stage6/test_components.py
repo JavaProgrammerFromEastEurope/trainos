@@ -1,8 +1,8 @@
-from trainos.kernel.world.components.component_container import (
+from kernel.world.components.component_container import (
     ComponentContainer,
 )
 
-from trainos.kernel.world.components.health_component import (
+from kernel.world.components.health_component import (
     HealthComponent,
 )
 

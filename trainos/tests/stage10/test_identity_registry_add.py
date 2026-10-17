@@ -1,6 +1,6 @@
-from trainos.kernel.civilization.identity.identity import Identity
-from trainos.kernel.civilization.identity.identity_registry import IdentityRegistry
-from trainos.kernel.civilization.identity.identity_type import IdentityType
+from kernel.civilization.identity.identity import Identity
+from kernel.civilization.identity.identity_registry import IdentityRegistry
+from kernel.civilization.identity.identity_type import IdentityType
 
 
 def test_identity_registry_add():

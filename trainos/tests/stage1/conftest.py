@@ -1,6 +1,6 @@
 import pytest
 
-from trainos.kernel.kernel import Kernel
+from kernel.kernel import Kernel
 
 
 @pytest.fixture

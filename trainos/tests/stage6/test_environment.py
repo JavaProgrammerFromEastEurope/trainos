@@ -1,8 +1,8 @@
-from trainos.kernel.world.environment.environment_service import (
+from kernel.world.environment.environment_service import (
     EnvironmentService,
 )
 
-from trainos.kernel.world.environment.weather_type import (
+from kernel.world.environment.weather_type import (
     WeatherType,
 )
 

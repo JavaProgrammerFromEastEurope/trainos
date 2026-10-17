@@ -1,4 +1,4 @@
-from trainos.kernel.ai.memory.memory_manager import MemoryManager
+from kernel.ai.memory.memory_manager import MemoryManager
 
 
 def test_memory_system():

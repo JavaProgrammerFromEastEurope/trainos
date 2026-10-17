@@ -1,7 +1,7 @@
 # tests/stage2/test_clock_service.py
 
-from trainos.kernel.clock.clock_service import ClockService
-from trainos.kernel.lifecycle.kernel_service import ServiceState
+from kernel.clock.clock_service import ClockService
+from kernel.lifecycle.kernel_service import ServiceState
 
 
 def test_clock_service():

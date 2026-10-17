@@ -1,9 +1,9 @@
-from trainos.kernel.strategy.preference.preference_dimension import PreferenceDimension
-from trainos.kernel.strategy.preference.preference_weight import PreferenceWeight
-from trainos.kernel.strategy.preference_conflict.conflict_registry import (
+from kernel.strategy.preference.preference_dimension import PreferenceDimension
+from kernel.strategy.preference.preference_weight import PreferenceWeight
+from kernel.strategy.preference_conflict.conflict_registry import (
     ConflictRegistry,
 )
-from trainos.kernel.strategy.preference_conflict.conflict_resolution import (
+from kernel.strategy.preference_conflict.conflict_resolution import (
     PreferenceResolution,
 )
 

@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from trainos.kernel.state.state_change_record import (
+from kernel.state.state_change_record import (
     StateChangeRecord,
 )
-from trainos.kernel.state.state_history_record import (
+from kernel.state.state_history_record import (
     StateHistoryRecord,
 )
 

@@ -1,5 +1,5 @@
-from trainos.kernel.constitution.amendment.integration.constitutional_integration import ConstitutionalIntegration
-from trainos.kernel.constitution.amendment.integration.integration_result import IntegrationResult
+from kernel.constitution.amendment.integration.constitutional_integration import ConstitutionalIntegration
+from kernel.constitution.amendment.integration.integration_result import IntegrationResult
 
 
 def test_constitutional_integration():

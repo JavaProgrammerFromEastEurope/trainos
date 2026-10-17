@@ -1,5 +1,5 @@
-from trainos.kernel.evolution.identity.identity_registry import IdentityRegistry
-from trainos.kernel.evolution.identity.identity_snapshot import IdentitySnapshot
+from kernel.evolution.identity.identity_registry import IdentityRegistry
+from kernel.evolution.identity.identity_snapshot import IdentitySnapshot
 
 
 def test_identity_registry_register():

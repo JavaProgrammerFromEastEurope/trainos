@@ -1,6 +1,6 @@
-from trainos.kernel.lifecycle.kernel_service import KernelService, ServiceState
-from trainos.kernel.runtime.runtime_snapshot import RuntimeSnapshot
-from trainos.kernel.runtime.runtime_metrics import RuntimeMetrics
+from kernel.lifecycle.kernel_service import KernelService, ServiceState
+from kernel.runtime.runtime_snapshot import RuntimeSnapshot
+from kernel.runtime.runtime_metrics import RuntimeMetrics
 
 
 class RuntimeMetricsService(KernelService):

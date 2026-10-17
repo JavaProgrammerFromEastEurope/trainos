@@ -1,5 +1,5 @@
-from trainos.kernel.intelligence.inference.inference_registry import InferenceRegistry
-from trainos.kernel.intelligence.inference.inference_result import InferenceResult
+from kernel.intelligence.inference.inference_registry import InferenceRegistry
+from kernel.intelligence.inference.inference_result import InferenceResult
 
 
 def test_inference_registry_register():

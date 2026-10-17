@@ -1,8 +1,8 @@
-from trainos.kernel.strategy.arbitration.arbitration_registry import ArbitrationRegistry
-from trainos.kernel.strategy.arbitration.arbitration_result import ArbitrationResult
-from trainos.kernel.strategy.goals.goal import Goal
-from trainos.kernel.strategy.goals.goal_id import GoalId
-from trainos.kernel.strategy.goals.goal_priority import GoalPriority
+from kernel.strategy.arbitration.arbitration_registry import ArbitrationRegistry
+from kernel.strategy.arbitration.arbitration_result import ArbitrationResult
+from kernel.strategy.goals.goal import Goal
+from kernel.strategy.goals.goal_id import GoalId
+from kernel.strategy.goals.goal_priority import GoalPriority
 
 
 def test_arbitration_registry_register():

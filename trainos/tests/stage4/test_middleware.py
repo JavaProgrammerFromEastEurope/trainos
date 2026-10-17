@@ -1,6 +1,6 @@
-from trainos.kernel.command_bus.middleware_chain import MiddlewareChain
-from trainos.kernel.command_bus.request import Request
-from trainos.kernel.command_bus.response import Response
+from kernel.command_bus.middleware_chain import MiddlewareChain
+from kernel.command_bus.request import Request
+from kernel.command_bus.response import Response
 
 
 class MW:

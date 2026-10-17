@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from trainos.kernel.clock.clock_state import ClockState
-from trainos.kernel.lifecycle.kernel_service import (
+from kernel.clock.clock_state import ClockState
+from kernel.lifecycle.kernel_service import (
     KernelService,
     ServiceState,
 )

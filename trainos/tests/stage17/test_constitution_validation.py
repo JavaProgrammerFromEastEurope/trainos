@@ -1,5 +1,5 @@
-from trainos.kernel.constitution.validation.constitutional_validation import ConstitutionalValidation
-from trainos.kernel.constitution.validation.validation_result import ValidationResult
+from kernel.constitution.validation.constitutional_validation import ConstitutionalValidation
+from kernel.constitution.validation.validation_result import ValidationResult
 
 
 def test_constitution_validation():

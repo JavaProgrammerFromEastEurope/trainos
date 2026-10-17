@@ -1,4 +1,4 @@
-from trainos.kernel.behavior.cognition.cognitive_engine import (
+from kernel.behavior.cognition.cognitive_engine import (
     CognitiveEngine,
 )
 

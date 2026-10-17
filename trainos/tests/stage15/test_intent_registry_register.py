@@ -1,6 +1,6 @@
-from trainos.kernel.strategy.intent.civilization_intent import CivilizationIntent
-from trainos.kernel.strategy.intent.intent_priority import IntentPriority
-from trainos.kernel.strategy.intent.intent_registry import IntentRegistry
+from kernel.strategy.intent.civilization_intent import CivilizationIntent
+from kernel.strategy.intent.intent_priority import IntentPriority
+from kernel.strategy.intent.intent_registry import IntentRegistry
 
 
 def test_intent_registry_register():

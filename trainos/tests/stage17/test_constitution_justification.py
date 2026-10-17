@@ -1,7 +1,7 @@
-from trainos.kernel.constitution.justification.constitutional_justification import (
+from kernel.constitution.justification.constitutional_justification import (
     ConstitutionalJustification,
 )
-from trainos.kernel.constitution.justification.justification_type import (
+from kernel.constitution.justification.justification_type import (
     JustificationType,
 )
 

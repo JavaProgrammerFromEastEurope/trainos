@@ -1,5 +1,5 @@
-from trainos.kernel.ai.decision.decision_context import DecisionContext
-from trainos.kernel.ai.decision.decision_engine import DecisionEngine
+from kernel.ai.decision.decision_context import DecisionContext
+from kernel.ai.decision.decision_engine import DecisionEngine
 
 
 def test_decision_engine():

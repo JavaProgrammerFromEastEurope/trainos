@@ -1,4 +1,4 @@
-from trainos.kernel.kernel import Kernel
+from kernel.kernel import Kernel
 
 
 def test_kernel_bootstrap():

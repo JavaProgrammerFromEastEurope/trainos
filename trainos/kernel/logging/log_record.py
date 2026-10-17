@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from dataclasses import dataclass
-from trainos.kernel.logging.log_level import LogLevel
+from kernel.logging.log_level import LogLevel
 
 
 @dataclass(slots=True)

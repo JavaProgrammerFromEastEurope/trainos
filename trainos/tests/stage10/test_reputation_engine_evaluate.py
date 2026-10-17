@@ -1,5 +1,5 @@
-from trainos.kernel.civilization.reputation.reputation_engine import ReputationEngine
-from trainos.kernel.civilization.reputation.reputation_score import ReputationScore
+from kernel.civilization.reputation.reputation_engine import ReputationEngine
+from kernel.civilization.reputation.reputation_score import ReputationScore
 
 
 def test_reputation_engine_evaluate():

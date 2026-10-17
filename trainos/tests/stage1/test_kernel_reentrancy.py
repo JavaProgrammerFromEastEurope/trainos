@@ -1,6 +1,6 @@
-from trainos.kernel.kernel import Kernel
-from trainos.kernel.events.event import Event
-from trainos.kernel.events.event_handler import EventHandler
+from kernel.kernel import Kernel
+from kernel.events.event import Event
+from kernel.events.event_handler import EventHandler
 
 
 class ReentrantHandler(EventHandler):

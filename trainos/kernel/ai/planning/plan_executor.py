@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from trainos.kernel.ai.command_generation.decision_to_command_pipeline import (
+from kernel.ai.command_generation.decision_to_command_pipeline import (
     DecisionToCommandPipeline,
 )
-from trainos.kernel.command_bus.command_bus import CommandBus
-from trainos.kernel.command_bus.command_context import CommandContext
+from kernel.command_bus.command_bus import CommandBus
+from kernel.command_bus.command_context import CommandContext
 
 
 class PlanExecutor:

@@ -1,20 +1,20 @@
-from trainos.kernel.world.entities.entity import (
+from kernel.world.entities.entity import (
     Entity,
 )
 
-from trainos.kernel.world.entities.entity_id import (
+from kernel.world.entities.entity_id import (
     EntityId,
 )
 
-from trainos.kernel.world.entities.entity_metadata import (
+from kernel.world.entities.entity_metadata import (
     EntityMetadata,
 )
 
-from trainos.kernel.world.entities.entity_registry import (
+from kernel.world.entities.entity_registry import (
     EntityRegistry,
 )
 
-from trainos.kernel.world.entities.entity_type import (
+from kernel.world.entities.entity_type import (
     EntityType,
 )
 

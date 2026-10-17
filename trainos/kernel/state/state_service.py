@@ -1,56 +1,56 @@
 from __future__ import annotations
 
 
-from trainos.kernel.lifecycle.kernel_service import (
+from kernel.lifecycle.kernel_service import (
     KernelService,
     ServiceState,
 )
 
-from trainos.kernel.state.events.state_changed_event import (
+from kernel.state.events.state_changed_event import (
     StateChangedEvent,
 )
 
-from trainos.kernel.state.state_change_record import (
+from kernel.state.state_change_record import (
     StateChangeRecord,
 )
 
-from trainos.kernel.state.state_history import (
+from kernel.state.state_history import (
     StateHistory,
 )
 
-from trainos.kernel.state.state_history_record import (
+from kernel.state.state_history_record import (
     StateHistoryRecord,
 )
 
-from trainos.kernel.state.state_observer import (
+from kernel.state.state_observer import (
     StateObserver,
 )
 
-from trainos.kernel.state.state_snapshot import (
+from kernel.state.state_snapshot import (
     StateSnapshot,
 )
 
-from trainos.kernel.state.state_transaction import (
+from kernel.state.state_transaction import (
     StateTransaction,
 )
 
-from trainos.kernel.state.state_metrics import (
+from kernel.state.state_metrics import (
     StateMetrics,
 )
 
-from trainos.kernel.state.debug.state_inspector import (
+from kernel.state.debug.state_inspector import (
     StateInspector,
 )
 
-from trainos.kernel.state.serialization.state_exporter import (
+from kernel.state.serialization.state_exporter import (
     StateExporter,
 )
 
-from trainos.kernel.state.serialization.state_importer import (
+from kernel.state.serialization.state_importer import (
     StateImporter,
 )
 
-from trainos.kernel.state.control.state_controller import (
+from kernel.state.control.state_controller import (
     StateController,
 )
 

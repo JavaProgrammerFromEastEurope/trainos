@@ -1,6 +1,6 @@
 import pytest
-from trainos.kernel.kernel import Kernel
-from trainos.kernel.lifecycle.kernel_service import KernelService
+from kernel.kernel import Kernel
+from kernel.lifecycle.kernel_service import KernelService
 
 
 class DummyService(KernelService):

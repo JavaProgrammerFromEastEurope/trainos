@@ -1,5 +1,5 @@
-from trainos.kernel.intelligence.reasoning.reasoning_registry import ReasoningRegistry
-from trainos.kernel.intelligence.reasoning.reasoning_result import ReasoningResult
+from kernel.intelligence.reasoning.reasoning_registry import ReasoningRegistry
+from kernel.intelligence.reasoning.reasoning_result import ReasoningResult
 
 
 def test_reasoning_registry_register():

@@ -2,8 +2,8 @@
 
 from __future__ 	import annotations
 from collections 	import deque
-from trainos.kernel.logging.log_level import LogLevel
-from trainos.kernel.logging.log_record import LogRecord
+from kernel.logging.log_level import LogLevel
+from kernel.logging.log_record import LogRecord
 
 
 class Logger:

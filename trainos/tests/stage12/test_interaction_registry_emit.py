@@ -1,5 +1,5 @@
-from trainos.kernel.metacivilization.interaction.interaction_registry import InteractionRegistry
-from trainos.kernel.metacivilization.interaction.cross_system_event import CrossSystemEvent
+from kernel.metacivilization.interaction.interaction_registry import InteractionRegistry
+from kernel.metacivilization.interaction.cross_system_event import CrossSystemEvent
 
 
 def test_interaction_registry_emit():

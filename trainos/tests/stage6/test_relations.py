@@ -1,12 +1,12 @@
-from trainos.kernel.world.relations.relation import (
+from kernel.world.relations.relation import (
     Relation,
 )
 
-from trainos.kernel.world.relations.relation_graph import (
+from kernel.world.relations.relation_graph import (
     RelationGraph,
 )
 
-from trainos.kernel.world.relations.relation_type import (
+from kernel.world.relations.relation_type import (
     RelationType,
 )
 

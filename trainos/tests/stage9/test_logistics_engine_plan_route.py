@@ -1,7 +1,7 @@
-from trainos.kernel.communication.resource_ecology.logistics.logistic_engine import (
+from kernel.communication.resource_ecology.logistics.logistic_engine import (
     LogisticsEngine,
 )
-from trainos.kernel.communication.resource_ecology.logistics.transfer_route import (
+from kernel.communication.resource_ecology.logistics.transfer_route import (
     TransferRoute,
 )
 

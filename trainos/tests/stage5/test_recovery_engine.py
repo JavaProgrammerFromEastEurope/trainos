@@ -1,6 +1,6 @@
-from trainos.kernel.ai.recovery.recovery_engine import RecoveryEngine
-from trainos.kernel.ai.recovery.recovery_policy import RecoveryPolicy
-from trainos.kernel.ai.recovery.retry_state import RetryState
+from kernel.ai.recovery.recovery_engine import RecoveryEngine
+from kernel.ai.recovery.recovery_policy import RecoveryPolicy
+from kernel.ai.recovery.retry_state import RetryState
 
 
 def test_recovery_engine():

@@ -1,6 +1,6 @@
-from trainos.kernel.events.event_bus import EventBus
-from trainos.kernel.events.event import Event
-from trainos.kernel.events.event_handler import EventHandler
+from kernel.events.event_bus import EventBus
+from kernel.events.event import Event
+from kernel.events.event_handler import EventHandler
 
 
 class DummyHandler(EventHandler):

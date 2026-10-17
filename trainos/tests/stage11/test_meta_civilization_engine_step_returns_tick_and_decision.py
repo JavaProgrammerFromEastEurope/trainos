@@ -1,5 +1,5 @@
-from trainos.kernel.metacivilization.engine.meta_civilization_engine import MetaCivilizationEngine
-from trainos.kernel.metacivilization.engine.meta_state import MetaState
+from kernel.metacivilization.engine.meta_civilization_engine import MetaCivilizationEngine
+from kernel.metacivilization.engine.meta_state import MetaState
 
 
 def test_meta_civilization_engine_step_returns_tick_and_decision():

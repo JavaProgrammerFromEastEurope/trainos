@@ -1,6 +1,6 @@
-from trainos.kernel.evolution.memetics.meme import Meme
-from trainos.kernel.evolution.memetics.meme_type import MemeType
-from trainos.kernel.evolution.memetics.memetic_engine import MemeticEngine
+from kernel.evolution.memetics.meme import Meme
+from kernel.evolution.memetics.meme_type import MemeType
+from kernel.evolution.memetics.memetic_engine import MemeticEngine
 
 
 def test_memetic_engine_mutate():

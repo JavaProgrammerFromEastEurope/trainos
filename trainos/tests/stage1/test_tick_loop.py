@@ -1,5 +1,5 @@
-from trainos.kernel.kernel import Kernel
-from trainos.kernel.lifecycle.kernel_service import (
+from kernel.kernel import Kernel
+from kernel.lifecycle.kernel_service import (
     KernelService,
     ServiceState,
 )

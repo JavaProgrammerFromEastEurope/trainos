@@ -1,7 +1,7 @@
-from trainos.kernel.strategy.goals.goal import Goal
-from trainos.kernel.strategy.goals.goal_id import GoalId
-from trainos.kernel.strategy.goals.goal_priority import GoalPriority
-from trainos.kernel.strategy.goals.goal_registry import GoalRegistry
+from kernel.strategy.goals.goal import Goal
+from kernel.strategy.goals.goal_id import GoalId
+from kernel.strategy.goals.goal_priority import GoalPriority
+from kernel.strategy.goals.goal_registry import GoalRegistry
 
 
 def test_goal_registry_register():
