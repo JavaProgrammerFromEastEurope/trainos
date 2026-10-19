@@ -1,20 +1,4 @@
-# добавить правила игнорирования Python-кэша
-cat >> .gitignore <<'EOF'
-
 # Python cache
 __pycache__/
 *.py[cod]
-EOF
-
-# убрать уже отслеживаемые __pycache__ из Git, сохранив файлы локально
-find . -type d -name "__pycache__" -prune -exec git rm -r --cached --ignore-unmatch {} +
-
-# проверить изменения
-git status
-
-# добавить .history в .gitignore
-echo ".history/" >> .gitignore
-
-# удалить уже отслеживаемые .history из индекса Git, сохранив локальные файлы
-find . -type d -name ".history" -prune -exec git rm -r --cached --ignore-unmatch {} +
-
+.history/
