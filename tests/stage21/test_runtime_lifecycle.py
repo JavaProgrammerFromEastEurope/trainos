@@ -27,3 +27,10 @@ def test_runtime_lifecycle():
     assert runtime.context.lifecycle.state == LifecycleState.STOPPED
     runtime.shutdown()
     assert runtime.context.lifecycle.state == LifecycleState.SHUTDOWN
+
+    first = BaseContext()
+    second = BaseContext()
+    first.lifecycle.transition(LifecycleState.RUNNING)
+    assert first.lifecycle.state == LifecycleState.RUNNING
+    assert second.lifecycle.state == LifecycleState.CREATED
+    assert first.lifecycle is not second.lifecycle

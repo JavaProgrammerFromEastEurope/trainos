@@ -33,7 +33,7 @@ class KernelTestRunner:
                         self.logger.log("KERNEL HALTED DUE TO FAILURE")
                         return 1
 
-        self.logger.log("ALL STAGES PASSED")
+        self.logger.log("ALL CONFIGURED STAGES PASSED")
         return 0
 
     def _expand(self, target: str) -> list[str]:
