@@ -1,0 +1,2 @@
+class ImprovementScheduler:
+    pass
