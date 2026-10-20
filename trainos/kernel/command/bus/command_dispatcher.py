@@ -7,6 +7,7 @@ from ..execution.command_execution import CommandExecution
 from ..execution.execution_engine import ExecutionEngine
 from ..execution.execution_progress import ExecutionProgress
 from ..execution.execution_registry import ExecutionRegistry
+from ..execution.execution_audit_store import ExecutionAuditStore
 from ..execution.execution_status import ExecutionStatus
 from ..events import CommandEventService
 from ..handler.handler_engine import HandlerEngine
@@ -29,6 +30,7 @@ class CommandDispatcher:
         execution_engine: ExecutionEngine | None = None,
         execution_registry: ExecutionRegistry | None = None,
         event_service: CommandEventService | None = None,
+        audit_store: ExecutionAuditStore | None = None,
     ) -> None:
         if not isinstance(registry, HandlerRegistry):
             raise TypeError("registry must be a HandlerRegistry")
@@ -42,6 +44,8 @@ class CommandDispatcher:
             raise TypeError("execution_registry must be an ExecutionRegistry or None")
         if event_service is not None and not isinstance(event_service, CommandEventService):
             raise TypeError("event_service must be a CommandEventService or None")
+        if audit_store is not None and not isinstance(audit_store, ExecutionAuditStore):
+            raise TypeError("audit_store must be an ExecutionAuditStore or None")
         if execution_engine is not None and event_service is not None:
             raise ValueError("provide execution_engine or event_service, not both")
         self._registry = registry
@@ -49,6 +53,7 @@ class CommandDispatcher:
         self._handler_engine = handler_engine or HandlerEngine()
         self._execution_engine = execution_engine or ExecutionEngine(event_service)
         self._execution_registry = execution_registry or ExecutionRegistry()
+        self._audit_store = audit_store
 
     @property
     def execution_registry(self) -> ExecutionRegistry:
@@ -100,6 +105,8 @@ class CommandDispatcher:
         if self._execution_registry.exists(execution.execution_id):
             self._execution_registry.delete(execution.execution_id)
         self._execution_registry.register(execution.execution_id, execution)
+        if self._audit_store is not None:
+            self._audit_store.append(execution)
 
     @staticmethod
     def _failure(
