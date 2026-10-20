@@ -36,12 +36,30 @@ class ExecutionAuditStore:
                     attempts INTEGER NOT NULL,
                     max_attempts INTEGER NOT NULL,
                     completed INTEGER NOT NULL,
+                    transition_reason TEXT,
                     recorded_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')),
                     UNIQUE(execution_id, status)
                 )"""
             )
+            # Migrate existing databases created before transition reasons were recorded.
+            columns = {row["name"] for row in self._connection.execute("PRAGMA table_info(execution_audit)")}
+            if "transition_reason" not in columns:
+                self._connection.execute("ALTER TABLE execution_audit ADD COLUMN transition_reason TEXT")
             self._connection.execute(
                 "CREATE INDEX IF NOT EXISTS idx_execution_audit_command ON execution_audit(command_id, sequence)"
+            )
+            self._connection.execute(
+                """CREATE TABLE IF NOT EXISTS execution_reconciliation (
+                    sequence INTEGER PRIMARY KEY AUTOINCREMENT,
+                    execution_id TEXT NOT NULL,
+                    decision TEXT NOT NULL,
+                    reason TEXT NOT NULL,
+                    evidence_reference TEXT,
+                    recorded_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now'))
+                )"""
+            )
+            self._connection.execute(
+                "CREATE INDEX IF NOT EXISTS idx_execution_reconciliation_id ON execution_reconciliation(execution_id, sequence)"
             )
 
     @property
@@ -103,7 +121,7 @@ class ExecutionAuditStore:
         with self._lock:
             rows = self._connection.execute(
                 "SELECT sequence, execution_id, command_id, status, attempts, max_attempts, "
-                "completed, recorded_at FROM execution_audit WHERE execution_id = ? ORDER BY sequence",
+                "completed, transition_reason, recorded_at FROM execution_audit WHERE execution_id = ? ORDER BY sequence",
                 (execution_id,),
             ).fetchall()
         return tuple(dict(row) for row in rows)
@@ -114,7 +132,7 @@ class ExecutionAuditStore:
         with self._lock:
             rows = self._connection.execute(
                 "SELECT sequence, execution_id, command_id, status, attempts, max_attempts, "
-                "completed, recorded_at FROM execution_audit WHERE command_id = ? ORDER BY sequence",
+                "completed, transition_reason, recorded_at FROM execution_audit WHERE command_id = ? ORDER BY sequence",
                 (command_id,),
             ).fetchall()
         return tuple(dict(row) for row in rows)
@@ -151,6 +169,81 @@ class ExecutionAuditStore:
                 self.append(execution)
                 recovered.append(execution)
         return tuple(recovered)
+
+    def reconcile_recovery(
+        self,
+        execution_id: str,
+        decision: str,
+        reason: str,
+        evidence_reference: str | None = None,
+    ) -> str:
+        """Record an explicit recovery decision, never infer an outcome automatically.
+
+        ``manual_investigation`` records a review request while keeping the execution
+        in ``recovery_required``. ``confirmed_completed`` and ``confirmed_failed``
+        require a non-empty reason and append the corresponding terminal audit state.
+        A final decision can only be made once, while manual-investigation entries
+        may be added repeatedly until a final decision is recorded.
+        """
+        if not isinstance(execution_id, str) or not execution_id.strip():
+            raise ValueError("execution_id must not be empty")
+        allowed = {"confirmed_completed", "confirmed_failed", "manual_investigation"}
+        if not isinstance(decision, str) or decision not in allowed:
+            raise ValueError(f"decision must be one of {sorted(allowed)}")
+        if not isinstance(reason, str) or not reason.strip():
+            raise ValueError("reason must not be empty")
+        if evidence_reference is not None and (
+            not isinstance(evidence_reference, str) or not evidence_reference.strip()
+        ):
+            raise ValueError("evidence_reference must be a non-empty string when provided")
+
+        with self._lock, self._connection:
+            latest = self._connection.execute(
+                "SELECT sequence, command_id, status, attempts, max_attempts, completed "
+                "FROM execution_audit WHERE execution_id = ? ORDER BY sequence DESC LIMIT 1",
+                (execution_id,),
+            ).fetchone()
+            if latest is None:
+                raise ValueError("unknown execution_id")
+            if latest["status"] != ExecutionStatus.RECOVERY_REQUIRED.value:
+                raise ValueError("only recovery_required executions can be reconciled")
+
+            self._connection.execute(
+                "INSERT INTO execution_reconciliation "
+                "(execution_id, decision, reason, evidence_reference) VALUES (?, ?, ?, ?)",
+                (execution_id, decision, reason.strip(), evidence_reference.strip() if evidence_reference else None),
+            )
+            if decision == "manual_investigation":
+                return latest["status"]
+
+            final_status = (
+                ExecutionStatus.COMPLETED.value
+                if decision == "confirmed_completed"
+                else ExecutionStatus.FAILED.value
+            )
+            completed = int(decision == "confirmed_completed")
+            self._connection.execute(
+                "INSERT INTO execution_audit "
+                "(execution_id, command_id, status, attempts, max_attempts, completed, transition_reason) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (
+                    execution_id, latest["command_id"], final_status,
+                    latest["attempts"], latest["max_attempts"], completed, reason.strip(),
+                ),
+            )
+            return final_status
+
+    def get_reconciliation_history(self, execution_id: str) -> tuple[dict[str, Any], ...]:
+        """Return immutable-by-convention reconciliation records in append order."""
+        if not isinstance(execution_id, str) or not execution_id.strip():
+            raise ValueError("execution_id must not be empty")
+        with self._lock:
+            rows = self._connection.execute(
+                "SELECT sequence, execution_id, decision, reason, evidence_reference, recorded_at "
+                "FROM execution_reconciliation WHERE execution_id = ? ORDER BY sequence",
+                (execution_id,),
+            ).fetchall()
+        return tuple(dict(row) for row in rows)
 
     def get_latest_status(self, execution_id: str) -> str | None:
         """Return the latest persisted status, or None for an unknown execution."""
