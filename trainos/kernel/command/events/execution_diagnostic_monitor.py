@@ -11,7 +11,7 @@ from .event_type import CommandEventType
 
 @dataclass(frozen=True, slots=True)
 class ExecutionDiagnostic:
-    """Normalized diagnostic retained by the in-memory monitor."""
+    """Latest diagnostic event plus recurrence metadata for its retained group."""
 
     event_id: str
     execution_id: str
@@ -20,6 +20,28 @@ class ExecutionDiagnostic:
     message: str
     timestamp_iso: str
     sequence: int | None = None
+    occurrences: int = 1
+    first_seen_iso: str | None = None
+
+    @property
+    def repeated(self) -> bool:
+        return self.occurrences > 1
+
+
+@dataclass(frozen=True, slots=True)
+class ExecutionDiagnosticSummary:
+    """Summary of the diagnostic groups currently retained for one execution.
+
+    This is intentionally a bounded-retention view, not a durable or lifetime
+    per-execution audit. Cumulative lifetime counts remain available globally.
+    """
+
+    execution_id: str
+    retained_groups: int
+    repeated_groups: int
+    retained_occurrences: int
+    repeated_occurrences: int
+    severity_counts: tuple[tuple[str, int], ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -39,13 +61,23 @@ class ExecutionDiagnosticSnapshot:
     def error_count(self) -> int:
         return dict(self.severity_counts).get("error", 0)
 
+    @property
+    def repeated_groups_count(self) -> int:
+        return sum(finding.repeated for finding in self.recent_findings)
+
+    @property
+    def repeated_occurrences_count(self) -> int:
+        return sum(max(0, finding.occurrences - 1) for finding in self.recent_findings)
+
 
 class ExecutionDiagnosticMonitor:
     """Aggregate integrity diagnostic events without mutating execution history.
 
-    Counts are cumulative for this monitor instance. Retained findings are bounded
-    and represent the latest event for each (execution_id, code) pair. The monitor
-    is in-memory only; callers must not treat it as durable audit storage.
+    Event/severity counts are cumulative for this monitor instance. Retained
+    findings are bounded and represent the latest event for each
+    (execution_id, code) pair, including a recurrence count for that retained
+    group. If a group is evicted, its recurrence metadata is evicted too. The
+    monitor is in-memory only and is not a durable audit store.
     """
 
     _SEVERITIES = frozenset({"critical", "error", "warning", "info"})
@@ -80,7 +112,7 @@ class ExecutionDiagnosticMonitor:
             payload.get("diagnostic_type") == "execution_integrity"
             and isinstance(execution_id, str) and bool(execution_id.strip())
             and isinstance(code, str) and bool(code.strip())
-            and severity in self._SEVERITIES
+            and isinstance(severity, str) and severity in self._SEVERITIES
             and isinstance(message, str) and bool(message.strip())
             and (sequence is None or (isinstance(sequence, int) and not isinstance(sequence, bool) and sequence >= 0))
         )
@@ -93,18 +125,22 @@ class ExecutionDiagnosticMonitor:
 
             self._total_events += 1
             self._severity_counts[severity] += 1
+            timestamp_iso = event.timestamp.isoformat()
+            key = (execution_id, code)
+            previous = self._findings.get(key)
             finding = ExecutionDiagnostic(
                 event_id=event.event_id,
                 execution_id=execution_id,
                 code=code,
                 severity=severity,
                 message=message,
-                timestamp_iso=event.timestamp.isoformat(),
+                timestamp_iso=timestamp_iso,
                 sequence=sequence,
+                occurrences=(previous.occurrences + 1) if previous else 1,
+                first_seen_iso=(previous.first_seen_iso or previous.timestamp_iso) if previous else timestamp_iso,
             )
-            key = (execution_id, code)
             self._findings[key] = finding
-            # Keep the latest findings only; oldest by timestamp is evicted first.
+            # Keep the latest groups only; oldest by last-seen timestamp is evicted first.
             while len(self._findings) > self._max_findings:
                 oldest_key = min(self._findings, key=lambda item: self._findings[item].timestamp_iso)
                 del self._findings[oldest_key]
@@ -122,6 +158,27 @@ class ExecutionDiagnosticMonitor:
                 malformed_events=self._malformed_events,
                 severity_counts=tuple(sorted(self._severity_counts.items())),
                 recent_findings=findings,
+            )
+
+    def summary_for_execution(self, execution_id: str) -> ExecutionDiagnosticSummary:
+        """Summarize retained groups for an execution, never lifetime history."""
+        if not isinstance(execution_id, str) or not execution_id.strip():
+            raise ValueError("execution_id must be a non-empty string")
+        with self._lock:
+            findings = tuple(
+                finding for (owner, _), finding in self._findings.items()
+                if owner == execution_id
+            )
+            severity_counts = Counter(finding.severity for finding in findings)
+            retained_occurrences = sum(finding.occurrences for finding in findings)
+            repeated_groups = sum(finding.repeated for finding in findings)
+            return ExecutionDiagnosticSummary(
+                execution_id=execution_id,
+                retained_groups=len(findings),
+                repeated_groups=repeated_groups,
+                retained_occurrences=retained_occurrences,
+                repeated_occurrences=sum(max(0, finding.occurrences - 1) for finding in findings),
+                severity_counts=tuple(sorted(severity_counts.items())),
             )
 
     def close(self) -> None:

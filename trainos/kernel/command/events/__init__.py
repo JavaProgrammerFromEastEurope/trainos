@@ -10,6 +10,7 @@ from .execution_diagnostic_monitor import (
     ExecutionDiagnostic,
     ExecutionDiagnosticMonitor,
     ExecutionDiagnosticSnapshot,
+    ExecutionDiagnosticSummary,
 )
 from .execution_integrity_event_adapter import (
     ExecutionIntegrityEventAdapter,
@@ -28,4 +29,5 @@ __all__ = [
     "ExecutionDiagnostic",
     "ExecutionDiagnosticMonitor",
     "ExecutionDiagnosticSnapshot",
+    "ExecutionDiagnosticSummary",
 ]
