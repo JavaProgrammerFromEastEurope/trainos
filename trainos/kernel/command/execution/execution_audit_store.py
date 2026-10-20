@@ -245,6 +245,106 @@ class ExecutionAuditStore:
             ).fetchall()
         return tuple(dict(row) for row in rows)
 
+    def verify_integrity(self) -> tuple[dict[str, Any], ...]:
+        """Read-only consistency check for execution and reconciliation history.
+
+        Findings are diagnostics, not repairs. A clean result is an empty tuple.
+        This detects logical inconsistencies in the application ledger; it does
+        not prove that the SQLite file has not been maliciously modified.
+        """
+        findings: list[dict[str, Any]] = []
+        allowed_statuses = {status.value for status in ExecutionStatus}
+        allowed_next = {
+            "created": {"running", "failed"},
+            "running": {"completed", "failed", "recovery_required"},
+            "completed": set(),
+            "failed": set(),
+            "recovery_required": {"completed", "failed"},
+        }
+
+        def report(code: str, execution_id: str, message: str, sequence: int | None = None) -> None:
+            finding: dict[str, Any] = {
+                "code": code,
+                "execution_id": execution_id,
+                "message": message,
+            }
+            if sequence is not None:
+                finding["sequence"] = sequence
+            findings.append(finding)
+
+        with self._lock:
+            audit_rows = self._connection.execute(
+                "SELECT sequence, execution_id, command_id, status, attempts, max_attempts, "
+                "completed, transition_reason FROM execution_audit ORDER BY execution_id, sequence"
+            ).fetchall()
+            reconciliation_rows = self._connection.execute(
+                "SELECT sequence, execution_id, decision, reason, evidence_reference "
+                "FROM execution_reconciliation ORDER BY execution_id, sequence"
+            ).fetchall()
+
+        by_execution: dict[str, list[sqlite3.Row]] = {}
+        for row in audit_rows:
+            by_execution.setdefault(str(row["execution_id"]), []).append(row)
+
+        for execution_id, rows in by_execution.items():
+            previous = None
+            for row in rows:
+                sequence = int(row["sequence"])
+                status = str(row["status"])
+                if status not in allowed_statuses:
+                    report("unknown_status", execution_id, f"Unknown execution status: {status}", sequence)
+                attempts, max_attempts = row["attempts"], row["max_attempts"]
+                if not isinstance(attempts, int) or attempts < 0:
+                    report("invalid_attempts", execution_id, "attempts must be a non-negative integer", sequence)
+                if not isinstance(max_attempts, int) or max_attempts < 1:
+                    report("invalid_max_attempts", execution_id, "max_attempts must be a positive integer", sequence)
+                if isinstance(attempts, int) and isinstance(max_attempts, int) and (attempts < 0 or max_attempts < 1 or attempts > max_attempts):
+                    report("invalid_progress", execution_id, "attempt counters violate ExecutionProgress invariants", sequence)
+                completed = row["completed"]
+                if completed not in (0, 1):
+                    report("invalid_completed_flag", execution_id, "completed must be stored as 0 or 1", sequence)
+                if status == "completed" and completed != 1:
+                    report("completed_flag_mismatch", execution_id, "completed status must have completed=1", sequence)
+                if status in {"failed", "recovery_required", "created", "running"} and completed == 1:
+                    report("completed_flag_mismatch", execution_id, f"{status} status must not have completed=1", sequence)
+                if previous is None:
+                    if status != "created":
+                        report("missing_initial_state", execution_id, "First audit state must be created", sequence)
+                else:
+                    if row["command_id"] != previous["command_id"]:
+                        report("command_id_changed", execution_id, "command_id changed within one execution", sequence)
+                    prior_status = str(previous["status"])
+                    if status not in allowed_next.get(prior_status, set()):
+                        report("invalid_transition", execution_id, f"Invalid transition: {prior_status} -> {status}", sequence)
+                    if prior_status == "recovery_required" and status in {"completed", "failed"}:
+                        # Final recovery transitions must have a matching explicit decision.
+                        expected = "confirmed_completed" if status == "completed" else "confirmed_failed"
+                        matching = any(
+                            rec["execution_id"] == execution_id and rec["decision"] == expected
+                            for rec in reconciliation_rows
+                        )
+                        if not matching:
+                            report("missing_reconciliation", execution_id, f"{status} after recovery_required lacks {expected}", sequence)
+                previous = row
+
+        for row in reconciliation_rows:
+            execution_id = str(row["execution_id"])
+            decision = str(row["decision"])
+            if decision not in {"manual_investigation", "confirmed_completed", "confirmed_failed"}:
+                report("unknown_reconciliation_decision", execution_id, f"Unknown reconciliation decision: {decision}", int(row["sequence"]))
+            if not isinstance(row["reason"], str) or not row["reason"].strip():
+                report("missing_reconciliation_reason", execution_id, "Reconciliation reason must not be empty", int(row["sequence"]))
+            states = by_execution.get(execution_id, [])
+            if not any(str(state["status"]) == "recovery_required" for state in states):
+                report("orphan_reconciliation", execution_id, "Reconciliation record has no recovery_required state", int(row["sequence"]))
+            if decision == "confirmed_completed" and not any(str(state["status"]) == "completed" for state in states):
+                report("decision_status_mismatch", execution_id, "confirmed_completed has no completed audit state", int(row["sequence"]))
+            if decision == "confirmed_failed" and not any(str(state["status"]) == "failed" for state in states):
+                report("decision_status_mismatch", execution_id, "confirmed_failed has no failed audit state", int(row["sequence"]))
+
+        findings.sort(key=lambda item: (item["execution_id"], item.get("sequence", -1), item["code"]))
+        return tuple(findings)
+
     def get_latest_status(self, execution_id: str) -> str | None:
         """Return the latest persisted status, or None for an unknown execution."""
         if not isinstance(execution_id, str) or not execution_id.strip():
