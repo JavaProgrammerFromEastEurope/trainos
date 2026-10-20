@@ -6,6 +6,8 @@ from threading import RLock
 from typing import Any
 
 from .command_execution import CommandExecution
+from .execution_progress import ExecutionProgress
+from .execution_status import ExecutionStatus
 
 
 class ExecutionAuditStore:
@@ -79,9 +81,10 @@ class ExecutionAuditStore:
                     raise ValueError("execution_id cannot be reused for another command")
                 allowed_next = {
                     "created": {"running", "failed"},
-                    "running": {"completed", "failed"},
+                    "running": {"completed", "failed", "recovery_required"},
                     "completed": set(),
                     "failed": set(),
+                    "recovery_required": set(),
                 }
                 if execution.status.value not in allowed_next[latest["status"]]:
                     raise ValueError(
@@ -115,6 +118,50 @@ class ExecutionAuditStore:
                 (command_id,),
             ).fetchall()
         return tuple(dict(row) for row in rows)
+
+    def recover_incomplete_executions(self) -> tuple[CommandExecution, ...]:
+        """Mark executions left RUNNING by a prior process as requiring reconciliation.
+
+        This is deliberately not an automatic retry: a previous handler may have
+        completed an external side effect before the process stopped.
+        """
+        recovered: list[CommandExecution] = []
+        with self._lock:
+            latest_rows = self._connection.execute(
+                """SELECT a.execution_id, a.command_id, a.status, a.attempts,
+                          a.max_attempts, a.completed
+                   FROM execution_audit AS a
+                   JOIN (SELECT execution_id, MAX(sequence) AS sequence
+                         FROM execution_audit GROUP BY execution_id) AS latest
+                     ON latest.execution_id = a.execution_id AND latest.sequence = a.sequence
+                   WHERE a.status = 'running'
+                   ORDER BY a.sequence"""
+            ).fetchall()
+            for row in latest_rows:
+                execution = CommandExecution(
+                    execution_id=row["execution_id"],
+                    command_id=row["command_id"],
+                    progress=ExecutionProgress(
+                        attempts=row["attempts"],
+                        max_attempts=row["max_attempts"],
+                        completed=bool(row["completed"]),
+                    ),
+                    status=ExecutionStatus.RECOVERY_REQUIRED,
+                )
+                self.append(execution)
+                recovered.append(execution)
+        return tuple(recovered)
+
+    def get_latest_status(self, execution_id: str) -> str | None:
+        """Return the latest persisted status, or None for an unknown execution."""
+        if not isinstance(execution_id, str) or not execution_id.strip():
+            raise ValueError("execution_id must not be empty")
+        with self._lock:
+            row = self._connection.execute(
+                "SELECT status FROM execution_audit WHERE execution_id = ? ORDER BY sequence DESC LIMIT 1",
+                (execution_id,),
+            ).fetchone()
+        return None if row is None else str(row["status"])
 
     def close(self) -> None:
         with self._lock:

@@ -7,3 +7,4 @@ class ExecutionStatus(Enum):
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
+    RECOVERY_REQUIRED = "recovery_required"
