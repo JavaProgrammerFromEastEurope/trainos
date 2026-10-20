@@ -16,7 +16,15 @@ def test_adapter_publishes_all_lifecycle_event_types_with_expected_payloads():
         adapter.command_failed("cmd", "boom", 3),
         adapter.command_cancelled("cmd", "requested"),
     ]
-    assert [event.event_type for event in emitted] == list(CommandEventType)
+    assert [event.event_type for event in emitted] == [
+        CommandEventType.COMMAND_CREATED,
+        CommandEventType.COMMAND_STARTED,
+        CommandEventType.COMMAND_PROGRESS_UPDATED,
+        CommandEventType.COMMAND_RETRYING,
+        CommandEventType.COMMAND_COMPLETED,
+        CommandEventType.COMMAND_FAILED,
+        CommandEventType.COMMAND_CANCELLED,
+    ]
     assert emitted[0].payload == {"command_type": "email"}
     assert emitted[1].payload == {"handler": "mail-handler"}
     assert emitted[2].payload == {"attempts": 1, "max_attempts": 3, "completed": False}

@@ -9,3 +9,4 @@ class CommandEventType(Enum):
     COMMAND_COMPLETED = "command_completed"
     COMMAND_FAILED = "command_failed"
     COMMAND_CANCELLED = "command_cancelled"
+    EXECUTION_INTEGRITY_DIAGNOSTIC = "execution_integrity_diagnostic"
