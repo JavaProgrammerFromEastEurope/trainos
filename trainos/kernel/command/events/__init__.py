@@ -6,6 +6,11 @@ from .event_type import CommandEventType
 from .execution_event_adapter import (
     ExecutionEventAdapter,
 )
+from .execution_diagnostic_monitor import (
+    ExecutionDiagnostic,
+    ExecutionDiagnosticMonitor,
+    ExecutionDiagnosticSnapshot,
+)
 from .execution_integrity_event_adapter import (
     ExecutionIntegrityEventAdapter,
     IntegrityEventPublishResult,
@@ -20,4 +25,7 @@ __all__ = [
     "ExecutionEventAdapter",
     "ExecutionIntegrityEventAdapter",
     "IntegrityEventPublishResult",
+    "ExecutionDiagnostic",
+    "ExecutionDiagnosticMonitor",
+    "ExecutionDiagnosticSnapshot",
 ]
